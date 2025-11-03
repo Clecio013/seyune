@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <GoogleTagManager />
         <GoogleAnalytics />
@@ -46,6 +46,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${cormorantGaramond.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
+        suppressHydrationWarning
       >
         <GoogleTagManagerNoScript />
         {children}

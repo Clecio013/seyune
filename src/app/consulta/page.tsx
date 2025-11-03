@@ -55,6 +55,7 @@ export default function ConsultaPage() {
                 width={240}
                 height={96}
                 className="h-24 w-auto"
+                style={{ width: 'auto' }}
                 priority
               />
             </div>
@@ -531,15 +532,15 @@ export default function ConsultaPage() {
           >
             <AnalyticsButton
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground text-base sm:text-lg px-4 sm:px-8 py-4 sm:py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer max-w-full"
               trackingLocation="how_it_works"
               trackingLabel="Comece sua transformação hoje"
               trackingType="transformation"
               onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
             >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Comece sua transformação hoje
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Sparkles className="mr-1.5 sm:mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+              <span className="whitespace-nowrap text-sm sm:text-base md:text-lg">Comece sua transformação hoje</span>
+              <ArrowRight className="ml-1.5 sm:ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform flex-shrink-0" />
             </AnalyticsButton>
           </motion.div>
         </div>
@@ -574,7 +575,7 @@ export default function ConsultaPage() {
                 </motion.div>
 
                 {/* Seta desenhada à mão apontando das imagens para a citação */}
-                <svg className="absolute w-12 h-20 text-accent/40 z-10" style={{ top: '75px', left: '15px' }} viewBox="0 0 70 120" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="absolute w-12 h-20 text-accent/40 z-10 top-[106px] md:top-[75px] left-[15px]" viewBox="0 0 70 120" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M 50 100 Q 20 70, 25 35 Q 30 10, 25 5" strokeLinecap="round" strokeLinejoin="round" />
                   <path d="M 18 12 L 25 3 L 32 12" strokeLinecap="round" strokeLinejoin="miter" fill="none" />
                 </svg>
@@ -588,11 +589,11 @@ export default function ConsultaPage() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute bottom-4 left-4 right-4 bg-background/90 backdrop-blur-sm rounded-xl p-3 text-center">
-                      <p className="text-sm font-semibold text-muted-foreground mb-1">
+                    <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 bg-background/90 backdrop-blur-sm rounded-lg sm:rounded-xl p-1.5 sm:p-3 text-center">
+                      <p className="text-xs sm:text-sm font-semibold text-muted-foreground mb-0.5 sm:mb-1">
                         Antes
                       </p>
-                      <p className="font-heading text-2xl font-bold text-primary">
+                      <p className="font-heading text-lg sm:text-2xl font-bold text-primary">
                         45kg
                       </p>
                     </div>
@@ -606,17 +607,13 @@ export default function ConsultaPage() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute bottom-4 left-4 right-4 bg-accent/95 backdrop-blur-sm rounded-xl p-3 text-center">
-                      <p className="text-sm font-semibold text-accent-foreground/90 mb-1">
+                    <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 bg-accent/95 backdrop-blur-sm rounded-lg sm:rounded-xl p-1.5 sm:p-3 text-center">
+                      <p className="text-xs sm:text-sm font-semibold text-accent-foreground/90 mb-0.5 sm:mb-1">
                         Depois
                       </p>
-                      <p className="font-heading text-2xl font-bold text-accent-foreground">
+                      <p className="font-heading text-lg sm:text-2xl font-bold text-accent-foreground">
                         +10kg
                       </p>
-                    </div>
-                    {/* Badge */}
-                    <div className="absolute -top-3 -right-3 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                      Depois
                     </div>
                   </div>
                 </div>
@@ -1052,14 +1049,14 @@ export default function ConsultaPage() {
             <div className="pt-8 space-y-4">
               <AnalyticsButton
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-8 rounded-full shadow-2xl hover:shadow-primary/20 transition-all duration-300 group scale-105 cursor-pointer"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 rounded-full shadow-xl hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 group cursor-pointer"
                 trackingLocation="cta_final"
                 trackingLabel="Agende sua consulta agora"
                 trackingType="schedule"
                 onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
               >
-                Agende sua consulta agora
-                <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                <span className="font-semibold">Agende sua consulta agora</span>
+                <ArrowRight className="ml-2 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform flex-shrink-0" />
               </AnalyticsButton>
 
               <p className="text-sm text-muted-foreground">
@@ -1088,6 +1085,7 @@ export default function ConsultaPage() {
                 width={100}
                 height={40}
                 className="h-10 w-auto brightness-0 invert"
+                style={{ width: 'auto' }}
               />
               <p className="text-sm text-background/60 hidden md:block">
                 © {new Date().getFullYear()} Seyune
