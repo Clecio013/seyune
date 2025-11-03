@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
+import { GoogleTagManager, GoogleTagManagerNoScript, GoogleAnalytics, MetaPixel } from "@/components/analytics";
 
 // Títulos - Cormorant Garamond (elegante, editorial, alta legibilidade)
 const cormorantGaramond = Cormorant_Garamond({
@@ -38,9 +39,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
+      <head>
+        <GoogleTagManager />
+        <GoogleAnalytics />
+        <MetaPixel />
+      </head>
       <body
         className={`${cormorantGaramond.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
       >
+        <GoogleTagManagerNoScript />
         {children}
       </body>
     </html>
