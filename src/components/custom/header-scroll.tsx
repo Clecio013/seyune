@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 interface HeaderScrollProps {
-  whatsappUrl: string;
+  whatsappUrl?: string;
 }
 
 export function HeaderScroll({ whatsappUrl }: HeaderScrollProps) {
@@ -35,28 +36,35 @@ export function HeaderScroll({ whatsappUrl }: HeaderScrollProps) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -100, opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed top-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-b border-border shadow-lg"
+          className="fixed top-0 left-0 right-0 z-50 bg-card/20 backdrop-blur-xl border-b border-border shadow-lg"
         >
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-8">
             {/* Logo */}
-            <div>
+            <div className="flex-shrink-0">
               <Image
-                src="/logo-terracota.png"
+                src="/brand/logo-terracota.png"
                 alt="Seyune"
-                width={100}
-                height={40}
-                className="h-10 w-auto"
+                width={110}
+                height={44}
+                className="h-11 w-auto"
               />
+            </div>
+
+            {/* Frase no meio */}
+            <div className="hidden md:block flex-grow text-center">
+              <p className="font-heading font-bold text-foreground" style={{ fontSize: "18px" }}>
+                Corpo saudável. Mente livre.
+              </p>
             </div>
 
             {/* CTA Button */}
             <Button
-              size="sm"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-md hover:shadow-lg transition-all duration-300 group"
-              onClick={() => window.open(whatsappUrl, "_blank")}
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-md hover:shadow-lg transition-all duration-300 group cursor-pointer px-6 py-3 text-base font-semibold flex-shrink-0"
+              onClick={() => window.open(whatsappUrl || siteConfig.whatsapp.url, "_blank")}
             >
+              <MessageCircle className="mr-2 h-5 w-5" />
               Agende sua consulta
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </motion.header>

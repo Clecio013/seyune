@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
 
-// Títulos - Similar à Recoleta Alt (elegante, orgânica, curvas suaves)
-const cormorant = Cormorant_Garamond({
+// Títulos - Cormorant Garamond (elegante, editorial, alta legibilidade)
+const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
-// Corpo - Similar à Nexa (moderna, limpa, geométrica)
+// Corpo - Manrope (moderna, limpa, geométrica)
 const manrope = Manrope({
   variable: "--font-body",
   subsets: ["latin"],
@@ -18,7 +18,7 @@ const manrope = Manrope({
   display: "swap",
 });
 
-// Citações - Similar à Dreaming Outloud Sans (manuscrita, pessoal)
+// Citações - Caveat (manuscrita, pessoal)
 const caveat = Caveat({
   variable: "--font-quote",
   subsets: ["latin"],
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${cormorant.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
+        className={`${cormorantGaramond.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
       >
         {children}
       </body>

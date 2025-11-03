@@ -26,13 +26,12 @@ import {
   CheckCircle2,
   Instagram,
 } from "lucide-react";
+import { siteConfig } from "@/config/site";
 
 export default function ConsultaPage() {
-  const whatsappUrl = "https://wa.me/5511999999999?text=Olá%2C%20gostaria%20de%20agendar%20uma%20consulta";
-
   return (
     <>
-      <HeaderScroll whatsappUrl={whatsappUrl} />
+      <HeaderScroll />
       <main className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 py-20 bg-gradient-to-b from-background to-card">
@@ -47,26 +46,26 @@ export default function ConsultaPage() {
             {/* Logo */}
             <div className="mb-8">
               <Image
-                src="/logotipo-terracota.png"
+                src="/brand/logotipo-terracota.png"
                 alt="Seyune"
-                width={200}
-                height={80}
-                className="h-20 w-auto"
+                width={240}
+                height={96}
+                className="h-24 w-auto"
                 priority
               />
             </div>
 
             {/* Headline */}
             <div className="space-y-4">
-              <h1 className="font-heading text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+              <h1 className="font-heading text-4xl lg:text-5xl font-bold text-foreground leading-tight">
                 Você está cansada de viver para comer certo?
               </h1>
 
-              <p className="text-xl lg:text-2xl text-muted-foreground font-body leading-relaxed">
+              <p className="text-lg lg:text-xl text-muted-foreground font-body leading-relaxed">
                 É hora de parar o ciclo de dietas que começam com esperança e
                 terminam em culpa. Descubra como transformar sua relação com a
-                comida através da nutrição comportamental — sem restrições
-                severas, sem promessas vazias.
+                comida através da nutrição comportamental. <strong> Sem restrições
+                severas, sem promessas vazias.</strong>
               </p>
             </div>
 
@@ -78,8 +77,8 @@ export default function ConsultaPage() {
             >
               <Button
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-                onClick={() => window.open(whatsappUrl, "_blank")}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
               >
                 Agende sua consulta
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -93,46 +92,145 @@ export default function ConsultaPage() {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="flex items-center gap-2 text-sm text-muted-foreground"
             >
-              <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-secondary border-2 border-background" />
-                <div className="w-8 h-8 rounded-full bg-primary border-2 border-background" />
-                <div className="w-8 h-8 rounded-full bg-accent border-2 border-background" />
-              </div>
+              <Sparkles className="h-5 w-5 text-accent" />
               <span>Junte-se a dezenas de mulheres transformando suas vidas</span>
+            </motion.div>
+
+            {/* Mobile Image - Compacta */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="relative lg:hidden mt-8 max-w-[280px] mx-auto"
+            >
+              <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/hero/seyune-gradient.png"
+                  alt="Seyune - Nutricionista Comportamental"
+                  fill
+                  className="object-cover object-top"
+                  priority
+                />
+              </div>
+
+              {/* Badge Mobile 1 - Bottom */}
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-3 -left-3 bg-card rounded-xl p-3 shadow-lg border border-border/50"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-heading font-semibold text-sm">
+                    +10kg
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-xs">Massa Magra</p>
+                    <p className="text-[10px] text-muted-foreground">Transformação</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Badge Mobile 2 - Bottom Right */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute bottom-16 -right-3 bg-card rounded-xl p-3 shadow-lg border border-border/50"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-heading font-semibold text-sm">
+                    0%
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-xs">Sem Restrição</p>
+                    <p className="text-[10px] text-muted-foreground">Liberdade</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Badge Mobile 3 - Middle Left */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute top-1/2 -translate-y-1/2 -left-4 bg-card rounded-xl p-3 shadow-lg border border-border/50"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground font-heading font-semibold text-sm">
+                    100%
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-xs">Sem Culpa</p>
+                    <p className="text-[10px] text-muted-foreground">Relação saudável</p>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
 
-          {/* Image/Visual */}
+          {/* Image/Visual Desktop */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="relative hidden lg:block"
+            className="relative hidden lg:flex justify-end items-end"
           >
-            <div className="relative aspect-square rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 p-2 backdrop-blur-sm border border-border/50 overflow-hidden">
+            <div className="relative aspect-[3/4] h-[100vh] max-h-[650px] w-auto">
               <Image
-                src="/ensaio.jpg"
+                src="/images/hero/seyune-gradient.png"
                 alt="Seyune - Nutricionista Comportamental"
-                width={600}
-                height={600}
-                className="w-full h-full object-cover rounded-2xl"
+                width={560}
+                height={750}
+                className="w-full h-full object-contain object-top"
                 priority
               />
             </div>
 
-            {/* Floating element */}
+            {/* Floating element 1 - Bottom Left */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-6 -left-6 bg-card rounded-2xl p-6 shadow-xl border border-border"
+              className="absolute -bottom-4 -left-4 bg-card rounded-xl p-4 shadow-lg border border-border/50"
             >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-heading font-bold text-xl">
+              <div className="flex items-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-accent-foreground font-heading font-semibold text-base">
                   +10kg
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground">Massa Magra</p>
-                  <p className="text-sm text-muted-foreground">Transformação real</p>
+                  <p className="font-semibold text-foreground text-sm">Massa Magra</p>
+                  <p className="text-xs text-muted-foreground">Transformação real</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating element 2 - Top Right */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute bottom-16 -right-4 bg-card rounded-xl p-4 shadow-lg border border-border/50"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-heading font-semibold text-base">
+                  0%
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground text-sm">Sem Restrição</p>
+                  <p className="text-xs text-muted-foreground">Liberdade alimentar</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating element 3 - Middle Left */}
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute top-1/2 -translate-y-1/2 -left-6 bg-card rounded-xl p-4 shadow-lg border border-border/50"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground font-heading font-semibold text-base">
+                  100%
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground text-sm">Sem Culpa</p>
+                  <p className="text-xs text-muted-foreground">Relação saudável</p>
                 </div>
               </div>
             </motion.div>
@@ -322,7 +420,7 @@ export default function ConsultaPage() {
                   >
                     <benefit.icon className={`w-7 h-7 ${benefit.color}`} />
                   </div>
-                  <h3 className="font-heading text-xl font-semibold text-foreground mb-3">
+                  <h3 className="font-heading text-xl font-bold text-foreground mb-3">
                     {benefit.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -426,10 +524,10 @@ export default function ConsultaPage() {
           >
             <Button
               size="lg"
-              variant="outline"
-              className="border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground text-lg px-8 py-6 rounded-full transition-all duration-300 group"
-              onClick={() => window.open(whatsappUrl, "_blank")}
+              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+              onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
             >
+              <Sparkles className="mr-2 h-5 w-5" />
               Comece sua transformação hoje
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -447,15 +545,35 @@ export default function ConsultaPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative order-2 lg:order-1"
+              className="relative order-2 lg:order-1 space-y-6"
             >
               <div className="relative">
+                {/* Quote estilo Excalidraw */}
+                <motion.div
+                  initial={{ opacity: 0, rotate: -2 }}
+                  whileInView={{ opacity: 1, rotate: -1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="relative mb-12"
+                >
+                  <div className="p-6 relative">
+                    <p className="font-quote text-2xl text-accent leading-relaxed">
+                      &ldquo;Eu criei para mim o que nunca encontrei.&rdquo;
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Seta desenhada à mão apontando das imagens para a citação */}
+                <svg className="absolute w-12 h-20 text-accent/40 z-10" style={{ top: '75px', left: '15px' }} viewBox="0 0 70 120" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M 50 100 Q 20 70, 25 35 Q 30 10, 25 5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 18 12 L 25 3 L 32 12" strokeLinecap="round" strokeLinejoin="miter" fill="none" />
+                </svg>
                 {/* Fotos antes/depois */}
                 <div className="grid grid-cols-2 gap-4">
                   {/* Antes */}
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-border shadow-md">
                     <Image
-                      src="/seyune/antes.jpg"
+                      src="/images/transformacao/before.jpg"
                       alt="Seyune antes - 45kg"
                       fill
                       className="object-cover"
@@ -473,7 +591,7 @@ export default function ConsultaPage() {
                   {/* Depois */}
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border-2 border-accent shadow-xl">
                     <Image
-                      src="/seyune/depois.jpg"
+                      src="/images/transformacao/after.jpg"
                       alt="Seyune depois - +10kg massa magra"
                       fill
                       className="object-cover"
@@ -488,23 +606,10 @@ export default function ConsultaPage() {
                     </div>
                     {/* Badge */}
                     <div className="absolute -top-3 -right-3 bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                      Massa Magra
+                      Depois
                     </div>
                   </div>
                 </div>
-
-                {/* Floating quote */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="absolute -bottom-6 -left-6 bg-card rounded-2xl p-6 shadow-2xl border border-border max-w-xs"
-                >
-                  <p className="font-quote text-lg text-primary italic">
-                    "Eu criei para mim o que nunca encontrei."
-                  </p>
-                </motion.div>
               </div>
             </motion.div>
 
@@ -605,14 +710,9 @@ export default function ConsultaPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-background rounded-2xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg relative overflow-hidden"
+                className="bg-background rounded-2xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg"
               >
-                {/* Decorative quote mark */}
-                <div className="absolute top-4 right-4 text-8xl font-heading text-primary/5">
-                  "
-                </div>
-
-                <div className="relative">
+                <div>
                   <p className="font-heading text-2xl font-semibold text-primary mb-4">
                     {item.quote}
                   </p>
@@ -637,9 +737,10 @@ export default function ConsultaPage() {
             </p>
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group"
-              onClick={() => window.open(whatsappUrl, "_blank")}
+              className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+              onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
             >
+              <MessageCircle className="mr-2 h-5 w-5" />
               Fale comigo no WhatsApp
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -650,7 +751,7 @@ export default function ConsultaPage() {
       {/* Seção Quem é Seyune */}
       <section className="py-24 px-6 bg-gradient-to-b from-background to-card">
         <div className="max-w-5xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-12 items-start">
+          <div className="grid lg:grid-cols-5 gap-12 items-stretch">
             {/* Foto */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -659,9 +760,9 @@ export default function ConsultaPage() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-2"
             >
-              <div className="relative aspect-[3/4] rounded-3xl overflow-hidden border-4 border-accent/20 shadow-2xl">
+              <div className="relative h-full min-h-[500px] rounded-3xl overflow-hidden border-4 border-accent/20 shadow-2xl">
                 <Image
-                  src="/ensaio.jpg"
+                  src="/images/about/profile.jpg"
                   alt="Seyune"
                   fill
                   className="object-cover"
@@ -742,11 +843,13 @@ export default function ConsultaPage() {
                 </p>
 
                 <Button
-                  variant="outline"
-                  className="border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => window.open(whatsappUrl, "_blank")}
+                  size="lg"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                  onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
                 >
-                  Vamos trabalhar juntas?
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  Quero essa transformação
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
             </motion.div>
@@ -785,7 +888,7 @@ export default function ConsultaPage() {
                 value="item-1"
                 className="border border-border rounded-2xl px-6 bg-background"
               >
-                <AccordionTrigger className="font-heading text-lg text-left hover:no-underline">
+                <AccordionTrigger className="font-heading font-bold text-lg text-left hover:no-underline cursor-pointer">
                   Quanto custa a consulta?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -799,7 +902,7 @@ export default function ConsultaPage() {
                 value="item-2"
                 className="border border-border rounded-2xl px-6 bg-background"
               >
-                <AccordionTrigger className="font-heading text-lg text-left hover:no-underline">
+                <AccordionTrigger className="font-heading font-bold text-lg text-left hover:no-underline cursor-pointer">
                   Quanto tempo leva para ver resultados?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -814,7 +917,7 @@ export default function ConsultaPage() {
                 value="item-3"
                 className="border border-border rounded-2xl px-6 bg-background"
               >
-                <AccordionTrigger className="font-heading text-lg text-left hover:no-underline">
+                <AccordionTrigger className="font-heading font-bold text-lg text-left hover:no-underline cursor-pointer">
                   É mais uma dieta restritiva?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -828,7 +931,7 @@ export default function ConsultaPage() {
                 value="item-4"
                 className="border border-border rounded-2xl px-6 bg-background"
               >
-                <AccordionTrigger className="font-heading text-lg text-left hover:no-underline">
+                <AccordionTrigger className="font-heading font-bold text-lg text-left hover:no-underline cursor-pointer">
                   Eu já tentei tudo e nada funcionou. Por que seria diferente?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -843,7 +946,7 @@ export default function ConsultaPage() {
                 value="item-5"
                 className="border border-border rounded-2xl px-6 bg-background"
               >
-                <AccordionTrigger className="font-heading text-lg text-left hover:no-underline">
+                <AccordionTrigger className="font-heading font-bold text-lg text-left hover:no-underline cursor-pointer">
                   Como funciona o acompanhamento?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -857,7 +960,7 @@ export default function ConsultaPage() {
                 value="item-6"
                 className="border border-border rounded-2xl px-6 bg-background"
               >
-                <AccordionTrigger className="font-heading text-lg text-left hover:no-underline">
+                <AccordionTrigger className="font-heading font-bold text-lg text-left hover:no-underline cursor-pointer">
                   As consultas são presenciais ou online?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -913,8 +1016,8 @@ export default function ConsultaPage() {
             <div className="pt-8 space-y-4">
               <Button
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground text-xl px-12 py-8 rounded-full shadow-2xl hover:shadow-accent/20 transition-all duration-300 group scale-105"
-                onClick={() => window.open(whatsappUrl, "_blank")}
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-xl px-12 py-8 rounded-full shadow-2xl hover:shadow-primary/20 transition-all duration-300 group scale-105 cursor-pointer"
+                onClick={() => window.open(siteConfig.whatsapp.url, "_blank")}
               >
                 Agende sua consulta agora
                 <ArrowRight className="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
@@ -935,66 +1038,39 @@ export default function ConsultaPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground text-background py-12 px-6">
+      <footer className="bg-foreground text-background py-8 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-12 mb-12">
-            {/* Logo e tagline */}
-            <div className="space-y-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* Logo */}
+            <div className="flex items-center gap-6">
               <Image
-                src="/logo-terracota.png"
+                src="/brand/logo-terracota.png"
                 alt="Seyune"
-                width={120}
-                height={48}
-                className="h-12 w-auto brightness-0 invert"
+                width={100}
+                height={40}
+                className="h-10 w-auto brightness-0 invert"
               />
-              <p className="text-sm text-background/70">
-                Cuidar do corpo, respeitar a mente
+              <p className="text-sm text-background/60 hidden md:block">
+                © {new Date().getFullYear()} Seyune
               </p>
             </div>
 
-            {/* Links */}
-            <div>
-              <h4 className="font-heading font-semibold mb-4">Informações</h4>
-              <ul className="space-y-2 text-sm text-background/70">
-                <li>
-                  <a href="#" className="hover:text-background transition-colors">
-                    Política de Privacidade
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-background transition-colors">
-                    Termos de Uso
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-background transition-colors">
-                    LGPD - Seus Dados
-                  </a>
-                </li>
-              </ul>
-            </div>
-
             {/* Social */}
-            <div>
-              <h4 className="font-heading font-semibold mb-4">Redes Sociais</h4>
-              <a
-                href="https://www.instagram.com/seyune"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors"
-              >
-                <Instagram className="w-5 h-5" />
-                @seyune
-              </a>
-            </div>
+            <a
+              href={siteConfig.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-background/70 hover:text-background transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+              @seyune
+            </a>
           </div>
 
-          <div className="border-t border-background/10 pt-8 text-center text-sm text-background/60">
-            <p>
-              © {new Date().getFullYear()} Seyune - Nutrição Comportamental. Todos os
-              direitos reservados.
-            </p>
-          </div>
+          {/* Copyright mobile */}
+          <p className="text-xs text-background/60 text-center mt-4 md:hidden">
+            © {new Date().getFullYear()} Seyune
+          </p>
         </div>
       </footer>
     </main>
