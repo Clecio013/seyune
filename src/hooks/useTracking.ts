@@ -20,33 +20,28 @@ export interface TrackEventParams {
 
 export function useTracking() {
   const trackEvent = useCallback((params: TrackEventParams) => {
-    const { category, action, label, value } = params;
+    const { action, ...rest } = params;
 
     // Google Analytics 4
     if (typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", action, {
-        event_category: category,
-        event_label: label,
-        value: value,
-      });
+      window.gtag("event", action, { ...rest });
     }
 
     // Google Tag Manager (DataLayer)
     if (typeof window !== "undefined" && window.dataLayer) {
       window.dataLayer.push({
         event: action,
-        category: category,
-        label: label,
-        value: value,
+        ...rest,
       });
     }
 
     // Meta Pixel
     if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Lead", {
-        content_category: category,
-        content_name: label,
-      });
+      if (action === "whatsapp_click") {
+        window.fbq("trackCustom", "WhatsAppClick", { ...rest });
+      } else {
+        window.fbq("track", "Lead", { ...rest });
+      }
     }
   }, []);
 
