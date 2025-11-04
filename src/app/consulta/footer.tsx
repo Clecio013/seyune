@@ -30,7 +30,7 @@ export function Footer() {
           </div>
 
           {/* Copyright Lumes Digital - Centro */}
-          <p className="text-xs text-background/50 text-center">
+          <p className="text-xs text-background/70 text-center">
             Desenvolvido por{" "}
             <a
               href="https://www.instagram.com/lumesdigital_/"

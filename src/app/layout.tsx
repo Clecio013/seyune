@@ -103,7 +103,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
+      <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+
 
         {/* GTM gerencia GA4 e Meta Pixel - configure no painel do GTM */}
         {process.env.NODE_ENV === 'production' && <GoogleTagManager />}
