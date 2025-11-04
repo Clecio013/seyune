@@ -113,7 +113,7 @@ export default function RootLayout({
         className={`${cormorantGaramond.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
         suppressHydrationWarning
       >
-        {/* Analytics - GA4 e Meta Pixel instalados diretamente */}
+        {/* Analytics - GA4 e Meta Pixel (apenas em produção) */}
         {process.env.NODE_ENV === 'production' && (
           <>
             <GoogleAnalytics />
