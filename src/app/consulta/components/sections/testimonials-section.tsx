@@ -1,4 +1,8 @@
-// Server Component - Seção Depoimentos
+"use client";
+
+// Client Component - Seção Depoimentos com Scroll Reveal
+import { ScrollReveal } from "@/components/animations";
+
 export function TestimonialsSection() {
   const testimonials = [
     {
@@ -27,32 +31,33 @@ export function TestimonialsSection() {
     <section data-section="depoimentos" className="py-24 px-6 bg-card">
       <div className="max-w-6xl mx-auto">
         {/* Título */}
-        <div className="text-center mb-6">
-          <h2 className="font-heading text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Você não está sozinha
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Milhares de mulheres estão sentindo exatamente o que você sente
-            agora.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-6">
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Você não está sozinha
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Milhares de mulheres estão sentindo exatamente o que você sente
+              agora.
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Grid de "Depoimentos" */}
         <div className="grid md:grid-cols-2 gap-6 mt-16">
           {testimonials.map((item, index) => (
-            <div
-              key={index}
-              className="bg-background rounded-2xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg"
-            >
-              <div>
-                <p className="font-heading text-2xl font-semibold text-primary mb-4">
-                  {item.quote}
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.story}
-                </p>
+            <ScrollReveal key={index} delay={index * 0.15}>
+              <div className="bg-background rounded-2xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
+                <div>
+                  <p className="font-heading text-2xl font-semibold text-primary mb-4">
+                    {item.quote}
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {item.story}
+                  </p>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

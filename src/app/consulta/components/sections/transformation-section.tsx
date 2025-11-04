@@ -1,5 +1,8 @@
-// Server Component - Seção Transformação Seyune
+"use client";
+
+// Client Component - Seção Transformação Seyune com Scroll Reveal
 import Image from "next/image";
+import { ScrollReveal } from "@/components/animations";
 
 export function TransformationSection() {
   return (
@@ -7,7 +10,8 @@ export function TransformationSection() {
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Imagem/Visual */}
-          <div className="relative order-2 lg:order-1 space-y-6">
+          <ScrollReveal delay={0.2}>
+            <div className="relative order-2 lg:order-1 space-y-6">
             <div className="relative">
               {/* Quote estilo Excalidraw */}
               <div className="relative mb-12">
@@ -66,10 +70,12 @@ export function TransformationSection() {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          </ScrollReveal>
 
           {/* Conteúdo */}
-          <div className="space-y-6 order-1 lg:order-2">
+          <ScrollReveal>
+            <div className="space-y-6 order-1 lg:order-2">
             <div className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-4">
               Minha história
             </div>
@@ -104,7 +110,8 @@ export function TransformationSection() {
                 E hoje? Minha missão é entregar essa mesma transformação para mulheres como você — mulheres que merecem mais do que dietas restritivas e promessas vazias.
               </p>
             </div>
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

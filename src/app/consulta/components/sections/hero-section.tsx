@@ -1,6 +1,6 @@
 "use client";
 
-// Client Component - Hero Section com LazyMotion (otimizado)
+// Client Component - Hero Section com LazyMotion (micro-interações otimizadas)
 import Image from "next/image";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";

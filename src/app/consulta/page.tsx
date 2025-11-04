@@ -1,23 +1,44 @@
 // Server Component - Página de Consulta
-import { HeaderScroll } from "@/app/consulta/components/header-scroll";
-import { ScrollTracker } from "@/components/analytics";
+import dynamic from "next/dynamic";
 import { StructuredData } from "@/components/schema/structured-data";
 
-// All Section Components (Server + Client)
+// Critical Components (Above fold)
+import { HeroSection } from "@/app/consulta/components/sections";
+
+// Server Components (carregam rápido, sem JS)
 import {
-  HeroSection,
   PainPointsSection,
   BenefitsSection,
   HowItWorksSection,
   TransformationSection,
   TestimonialsSection,
   AboutSection,
-  FAQSection,
-  CTASection,
 } from "@/app/consulta/components/sections";
 
-// Footer Component
-import { Footer } from "./footer";
+// Dynamic Imports - Below fold components (carregam sob demanda)
+const FAQSection = dynamic(() =>
+  import("@/app/consulta/components/sections").then(mod => ({ default: mod.FAQSection })),
+  { ssr: true }
+);
+
+const CTASection = dynamic(() =>
+  import("@/app/consulta/components/sections").then(mod => ({ default: mod.CTASection })),
+  { ssr: true }
+);
+
+const Footer = dynamic(() =>
+  import("./footer").then(mod => ({ default: mod.Footer })),
+  { ssr: true }
+);
+
+// Dynamic Imports - Non-critical components (loaded after scroll)
+const HeaderScroll = dynamic(() =>
+  import("@/app/consulta/components/header-scroll").then(mod => ({ default: mod.HeaderScroll }))
+);
+
+const ScrollTracker = dynamic(() =>
+  import("@/components/analytics").then(mod => ({ default: mod.ScrollTracker }))
+);
 
 export default function ConsultaPage() {
   return (

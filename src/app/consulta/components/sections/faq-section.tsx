@@ -1,6 +1,6 @@
 "use client";
 
-// Client Component - FAQ Section
+// Client Component - FAQ Section com Scroll Reveal
 import {
   Accordion,
   AccordionContent,
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { useTracking } from "@/hooks/useTracking";
 import { StructuredData } from "@/components/schema/structured-data";
+import { ScrollReveal } from "@/components/animations";
 
 export function FAQSection() {
   const { trackFAQInteraction } = useTracking();
@@ -54,17 +55,20 @@ export function FAQSection() {
       <section data-section="faq" className="py-24 px-6 bg-card">
       <div className="max-w-4xl mx-auto">
         {/* Título */}
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Perguntas frequentes
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Tire suas dúvidas sobre a consultoria
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <h2 className="font-heading text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Perguntas frequentes
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Tire suas dúvidas sobre a consultoria
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Accordion */}
-        <Accordion
+        <ScrollReveal delay={0.2}>
+          <Accordion
           type="single"
           collapsible
           className="space-y-4"
@@ -92,6 +96,7 @@ export function FAQSection() {
             </AccordionItem>
           ))}
         </Accordion>
+        </ScrollReveal>
       </div>
     </section>
     </>

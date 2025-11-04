@@ -1,9 +1,10 @@
 "use client";
 
-// Client Component - CTA Final Section
+// Client Component - CTA Final Section com Scroll Reveal
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { AnalyticsButton } from "@/components/analytics";
 import { siteConfig } from "@/config/site";
+import { ScrollReveal } from "@/components/animations";
 
 export function CTASection() {
   return (
@@ -11,8 +12,9 @@ export function CTASection() {
       {/* Decorative elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
 
-      <div className="max-w-4xl mx-auto text-center relative">
-        <div className="space-y-8">
+      <ScrollReveal>
+        <div className="max-w-4xl mx-auto text-center relative">
+          <div className="space-y-8">
           <h2 className="font-heading text-4xl lg:text-6xl font-bold text-foreground">
             Está pronta para começar?
           </h2>
@@ -63,8 +65,9 @@ export function CTASection() {
               A escolha é sua. Mas saiba que eu estou aqui, pronta para te ajudar.
             </p>
           </div>
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

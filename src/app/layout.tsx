@@ -103,9 +103,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-      <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-      <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-
+        {/* Favicons - favicon.ico e apple-touch-icon.png são servidos automaticamente de app/ */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
+        <meta name="theme-color" content="#874329" />
 
         {/* GTM gerencia GA4 e Meta Pixel - configure no painel do GTM */}
         {process.env.NODE_ENV === 'production' && <GoogleTagManager />}
