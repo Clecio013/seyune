@@ -22,17 +22,9 @@ export function useTracking() {
   const trackEvent = useCallback((params: TrackEventParams) => {
     const { action, ...rest } = params;
 
-    // Google Analytics 4
+    // Google Analytics 4 (via gtag)
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", action, { ...rest });
-    }
-
-    // Google Tag Manager (DataLayer)
-    if (typeof window !== "undefined" && window.dataLayer) {
-      window.dataLayer.push({
-        event: action,
-        ...rest,
-      });
     }
 
     // Meta Pixel

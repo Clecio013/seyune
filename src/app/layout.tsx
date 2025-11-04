@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
-import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/analytics";
+import { GoogleAnalytics, MetaPixel } from "@/components/analytics";
 
 // Títulos - Cormorant Garamond (otimizado: 5 → 3 weights)
 const cormorantGaramond = Cormorant_Garamond({
@@ -108,15 +108,18 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta name="theme-color" content="#874329" />
-
-        {/* GTM gerencia GA4 e Meta Pixel - configure no painel do GTM */}
-        {process.env.NODE_ENV === 'production' && <GoogleTagManager />}
       </head>
       <body
         className={`${cormorantGaramond.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
         suppressHydrationWarning
       >
-        <GoogleTagManagerNoScript />
+        {/* Analytics - GA4 e Meta Pixel instalados diretamente */}
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <GoogleAnalytics />
+            <MetaPixel />
+          </>
+        )}
         {children}
       </body>
     </html>
