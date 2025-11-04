@@ -103,13 +103,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        {/* Preconnect para recursos externos críticos */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
 
         {/* GTM gerencia GA4 e Meta Pixel - configure no painel do GTM */}
-        <GoogleTagManager />
+        {process.env.NODE_ENV === 'production' && <GoogleTagManager />}
       </head>
       <body
         className={`${cormorantGaramond.variable} ${manrope.variable} ${caveat.variable} font-body antialiased`}
