@@ -167,6 +167,9 @@ export class CheckoutBuilder {
       // Criar preferência
       const preferenceClient = new Preference(client);
 
+      // URL base do site para construir a notification_url
+      const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://seyune.com.br';
+
       const requestBody = {
         body: {
           items: this.items.map(item => ({
@@ -186,6 +189,7 @@ export class CheckoutBuilder {
           auto_return: this.autoReturn,
           statement_descriptor: this.statementDescriptor,
           external_reference: this.externalReference,
+          notification_url: `${baseUrl}/api/webhook/mercadopago`, // URL para receber webhooks
           binary_mode: false, // Aceita todos os estados de pagamento (não força aprovação/rejeição)
           // IMPORTANTE: NÃO incluir 'purpose' para permitir guest checkout
           // purpose: 'wallet_purchase' força login obrigatório
