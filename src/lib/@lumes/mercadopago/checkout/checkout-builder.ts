@@ -193,7 +193,10 @@ export class CheckoutBuilder {
             excluded_payment_methods: [],
             excluded_payment_types: [],
             installments: 12, // Permitir até 12x parcelamento
+            default_payment_method_id: null, // Não forçar método padrão
           },
+          // Garantir que todos os métodos estejam disponíveis para guest checkout
+          expires: false, // Preference não expira
         },
       };
 
