@@ -127,7 +127,7 @@ export async function POST(req: Request) {
     console.error('[Save Lead API] Erro:', error);
 
     return NextResponse.json(
-      { error: 'Erro ao salvar lead' },
+      { error: 'Erro ao salvar lead', ...error as object },
       { status: 500 }
     );
   }
