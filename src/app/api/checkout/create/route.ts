@@ -132,7 +132,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(
-      { error: 'Erro ao criar checkout. Tente novamente.' },
+      { error: 'Erro ao criar checkout. Tente novamente.', ...error as object },
       { status: 500 }
     );
   }
