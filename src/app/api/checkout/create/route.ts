@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { MercadoPagoClient } from '@/lib/@lumes/mercadopago';
 import { getCurrentBatch } from '@/app/projeto45dias/lib/batches-config';
-import { hasAvailableSlots } from '@/app/projeto45dias/lib/slots-manager';
 import { SheetsClient } from '@/lib/@lumes/sheets';
 
 /**
@@ -30,16 +29,6 @@ export async function POST(req: Request) {
     if (!batch) {
       return NextResponse.json(
         { error: 'Campanha encerrada ou não iniciada' },
-        { status: 400 }
-      );
-    }
-
-    // Verificar se há vagas disponíveis
-    const slotsAvailable = await hasAvailableSlots(batch.id);
-
-    if (!slotsAvailable) {
-      return NextResponse.json(
-        { error: 'Vagas esgotadas para este lote' },
         { status: 400 }
       );
     }

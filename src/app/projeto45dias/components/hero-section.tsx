@@ -106,7 +106,7 @@ export const HeroSection: React.FC = () => {
 
               <motion.button
                 onClick={scrollToVSL}
-                className="px-8 py-4 rounded-lg border-2 border-[var(--gold-primary)] text-[var(--gold-primary)] font-bold hover:bg-[var(--gold-primary)] hover:text-black transition-all duration-300 flex items-center gap-2 justify-center"
+                className="cursor-pointer px-8 py-4 rounded-lg border-2 border-[var(--gold-primary)] text-[var(--gold-primary)] font-bold hover:bg-[var(--gold-primary)] hover:text-black transition-all duration-300 flex items-center gap-2 justify-center"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 aria-label="Ver como funciona"

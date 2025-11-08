@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { MercadoPagoClient } from '@/lib/@lumes/mercadopago';
 import { EmailClient } from '@/lib/@lumes/email';
 import { SheetsClient } from '@/lib/@lumes/sheets';
-import { decrementSlot } from '@/app/projeto45dias/lib/slots-manager';
 import ConfirmacaoCompra from '@/lib/@lumes/email/templates/confirmacao-compra';
 
 /**
@@ -34,12 +33,7 @@ export async function POST(req: Request) {
         console.log('[Webhook MP] Pagamento aprovado:', payment.id);
 
         try {
-          // 1. Decrementar vaga
-          const loteId = payment.metadata.lote_id;
-          await decrementSlot(loteId);
-          console.log(`[Webhook MP] Vaga decrementada para lote ${loteId}`);
-
-          // 2. Atualizar Google Sheets com dados do pagamento
+          // 1. Atualizar Google Sheets com dados do pagamento
           const sheetsClient = SheetsClient.create({
             privateKey: process.env.GOOGLE_SHEETS_PRIVATE_KEY!,
             clientEmail: process.env.GOOGLE_SHEETS_CLIENT_EMAIL!,

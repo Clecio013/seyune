@@ -7,6 +7,7 @@
 export interface Batch {
   id: number;
   name: string;
+  /** @deprecated Campo mantido para referência histórica. Sistema não controla mais vagas via Redis. */
   slots: number;
   originalPrice: number;
   promotionalPrice: number;

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Check, Zap, TrendingUp } from 'lucide-react';
-import { Countdown } from './countdown';
+import { UrgencyBadge } from './urgency-badge';
 import { getCurrentBatch, getNextBatch, calculateSavings, isCampaignEnded, formatPrice } from '../lib/batches-config';
 import { CompleteDataBeforeCheckout } from './complete-data-before-checkout';
 
@@ -60,12 +60,7 @@ export const OfertaSection: React.FC = () => {
 
         {/* Card de Oferta */}
         <div className="projeto45-card max-w-4xl mx-auto relative overflow-hidden">
-          {/* Badge do lote */}
-          <div className="absolute top-0 right-0 bg-[var(--accent-red)] text-white px-6 py-2 text-sm font-bold uppercase tracking-wider">
-            {currentBatch.name}
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 p-8 md:p-12 pt-16 md:pt-12">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 p-8 md:p-12">
             {/* Lado esquerdo: Preço */}
             <div className="flex flex-col justify-center items-center md:items-start text-center md:text-left border-b md:border-b-0 md:border-r border-[var(--gold-dark)] pb-8 md:pb-0 md:pr-8">
               {/* Preço original */}
@@ -139,9 +134,9 @@ export const OfertaSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Contador regressivo */}
+          {/* Badge de urgência */}
           <div className="border-t border-[var(--gold-dark)] pt-8 pb-4 px-8">
-            <Countdown targetDate={currentBatch.endDate} />
+            <UrgencyBadge />
           </div>
 
           {/* CTA */}
@@ -150,9 +145,9 @@ export const OfertaSection: React.FC = () => {
               ✅ GARANTIR MINHA VAGA AGORA
             </button>
 
-            {/* Vagas limitadas */}
+            {/* Urgência */}
             <p className="text-center text-[var(--text-muted)] text-sm mt-4">
-              🔥 Apenas <span className="text-[var(--accent-red)] font-bold">{currentBatch.slots} vagas</span> disponíveis neste lote
+              🔥 <span className="text-[var(--accent-red)] font-bold">Vagas limitadas</span> • Preço aumenta em breve
             </p>
           </div>
         </div>

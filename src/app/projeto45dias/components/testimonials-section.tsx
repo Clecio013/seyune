@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
 import { scrollToOferta } from '../utils/scrollToOferta';
+import { UrgencyBadge } from './urgency-badge';
 
 const fadeIn = {
   initial: { opacity: 0, y: 40 },
@@ -174,10 +175,9 @@ export const TestimonialsSection: React.FC = () => {
             COMEÇAR MINHA TRANSFORMAÇÃO
           </motion.button>
 
-          <p className="text-[var(--text-muted)] mt-4 text-sm">
-            ⚡ Apenas{' '}
-            <span className="text-[var(--gold-primary)] font-semibold">25 vagas</span> por lote
-          </p>
+          <div className="mt-6">
+            <UrgencyBadge />
+          </div>
         </motion.div>
       </div>
     </section>

@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'Por que o preço aumenta nos próximos lotes?',
     answer:
-      'Trabalhamos com sistema de lotes para criar urgência real e valorizar quem toma decisão rápido. Cada lote tem 25 vagas e o preço aumenta R$50 a cada lote. Quanto antes você garantir, menor o investimento.',
+      'Trabalhamos com vagas limitadas e preço promocional por tempo determinado. O investimento aumenta conforme a demanda e proximidade do início do programa. Quanto antes você garantir, menor será o valor investido.',
   },
   {
     question: 'Como funcionam as consultas? São online ou presencial?',

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 import Image from 'next/image';
+import { UrgencyBadge } from './urgency-badge';
 
 interface VSLSectionProps {
   pandaVideoId?: string;
@@ -133,17 +134,15 @@ export const VSLSection: React.FC<VSLSectionProps> = ({ pandaVideoId }) => {
             Quero meu projeto de 45 dias
           </motion.button>
 
-          <motion.p
-            className="text-[var(--text-muted)] mt-4 text-sm"
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.5 }}
+            className="mt-6"
           >
-            ⚡ Apenas{' '}
-            <span className="text-[var(--gold-primary)] font-bold">25 vagas</span>{' '}
-            neste lote
-          </motion.p>
+            <UrgencyBadge />
+          </motion.div>
         </motion.div>
       </div>
     </section>

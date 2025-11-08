@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { UserCheck, FileText, Rocket, ArrowRight } from 'lucide-react';
 import { scrollToOferta } from '@/app/projeto45dias/utils/scrollToOferta';
+import { UrgencyBadge } from './urgency-badge';
 
 const fadeIn = {
   initial: { opacity: 0, y: 40 },
@@ -204,12 +205,9 @@ export const HowItWorksSection: React.FC = () => {
               GARANTIR MINHA VAGA AGORA
             </motion.button>
 
-            <p className="text-[var(--text-muted)] mt-4 text-sm">
-              ⏰ Próximo lote com preço maior •{' '}
-              <span className="text-[var(--gold-primary)] font-semibold">
-                Apenas 25 vagas
-              </span>
-            </p>
+            <div className="mt-6">
+              <UrgencyBadge />
+            </div>
           </div>
         </motion.div>
       </div>
