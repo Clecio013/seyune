@@ -98,6 +98,7 @@ export const HeroSection: React.FC = () => {
               <motion.button
                 onClick={scrollToOferta}
                 className="projeto45-cta"
+                style={{ padding: '24px' }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 aria-label="Garantir minha vaga"
@@ -152,7 +153,7 @@ export const HeroSection: React.FC = () => {
             animate="animate"
             className="relative order-1 lg:order-2"
           >
-            <div className="relative aspect-[4/5] lg:aspect-[3/4] max-w-xl lg:max-w-2xl mx-auto">
+            <div className="relative aspect-[4/5] lg:aspect-[3/4] max-w-2xl lg:max-w-5xl mx-auto">
               {/* Imagem */}
               <motion.div
                 className="relative w-full h-full"
