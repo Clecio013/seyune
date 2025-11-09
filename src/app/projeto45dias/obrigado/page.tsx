@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 type PageState = 'loading' | 'form' | 'complete' | 'error';
 
@@ -264,29 +265,40 @@ function ThankYouContent() {
                         }}
                         locale={ptBR}
                         captionLayout="dropdown"
-                        fromDate={minDate}
-                        toDate={maxDate}
+                        hidden={{
+                          before: minDate,
+                          after: maxDate,
+                        }}
                         defaultMonth={new Date(1995, 0)}
                         disabled={(date) => date > maxDate || date < minDate}
                         formatters={{
-                          formatMonthDropdown: (date) =>
-                            date.toLocaleDateString('pt-BR', { month: 'short' }),
+                          formatMonthDropdown: (date) => {
+                            const monthName = date.toLocaleDateString('pt-BR', { month: 'long' });
+                            return monthName.charAt(0).toUpperCase() + monthName.charAt(1);
+                          },
                           formatYearDropdown: (date) => String(date.getFullYear()),
-                          formatWeekdayName: (date) =>
-                            date.toLocaleDateString('pt-BR', { weekday: 'short' }),
+                          formatWeekdayName: (date) => {
+                            const weekday = date.toLocaleDateString('pt-BR', { weekday: 'short' });
+                            // Remove ponto e capitaliza primeira letra
+                            const clean = weekday.replace('.', '');
+                            return clean.charAt(0).toUpperCase() + clean.slice(1);
+                          },
                         }}
-                        classNames={{
-                          month_caption: 'text-zinc-50',
-                          weekday: 'text-zinc-400',
-                          day: 'text-zinc-50',
-                          nav: 'hidden',
-                        }}
+                        className={cn(
+                          '[&_.rdp-month_caption]:text-zinc-50',
+                          '[&_.rdp-weekday]:text-zinc-400',
+                          '[&_button]:text-zinc-50',
+                          '[&_.rdp-dropdown]:text-zinc-50 [&_.rdp-dropdown]:bg-transparent',
+                          '[&_.rdp-dropdown_root]:border-zinc-700 [&_.rdp-dropdown_root]:bg-zinc-800',
+                          '[&_.rdp-caption_label]:text-zinc-50 [&_.rdp-caption_label]:!text-zinc-50',
+                          '[&_select]:text-zinc-50',
+                          '[&_svg]:text-zinc-400',
+                          '[&_.rdp-dropdowns]:text-zinc-50',
+                          '[&_.rdp-dropdowns_root]:text-zinc-50',
+                        )}
                       />
                     </PopoverContent>
                   </Popover>
-                  <p className="text-xs text-zinc-500 mt-2">
-                    Você deve ter entre 18 e 100 anos para participar do programa
-                  </p>
                 </div>
 
                 {error && (

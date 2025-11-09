@@ -16,7 +16,7 @@ export default function Projeto45DiasPage() {
       <HeroSection />
 
       {/* VSL Section */}
-      <VSLSection pandaVideoId="" />
+      <VSLSection />
 
       {/* Benefits Section */}
       <BenefitsSection />
