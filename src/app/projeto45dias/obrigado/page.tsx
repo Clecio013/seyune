@@ -2,7 +2,7 @@
 
 import React, { Suspense, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Calendar as CalendarIcon, Users, BookOpen, Sparkles, Loader2, ChevronDownIcon } from 'lucide-react';
+import { CheckCircle, Calendar as CalendarIcon, Users, BookOpen, Sparkles, Loader2, ChevronDownIcon, MessageCircle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { ptBR } from 'date-fns/locale';
 import { BrandLogo } from '../components/brand-logo';
@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
-type PageState = 'loading' | 'form' | 'complete' | 'error';
+type PageState = 'loading' | 'pending' | 'form' | 'complete' | 'error';
 
 interface PaymentData {
   nome: string;
@@ -26,6 +26,8 @@ interface PaymentData {
 function ThankYouContent() {
   const searchParams = useSearchParams();
   const paymentId = searchParams.get('payment_id');
+  const status = searchParams.get('status');
+  const paymentType = searchParams.get('payment_type');
 
   const [state, setState] = useState<PageState>('loading');
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
@@ -33,11 +35,26 @@ function ThankYouContent() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [pollingInterval, setPollingInterval] = useState<NodeJS.Timeout | null>(null);
 
   const whatsappLink = process.env.NEXT_PUBLIC_WHATSAPP_GROUP_LINK || 'https://chat.whatsapp.com/xxx';
 
   // Fetch payment data on mount
   useEffect(() => {
+    // Se status=pending (PIX ou outro método aguardando), mostrar tela de pendente
+    if (status === 'pending') {
+      if (!paymentId) {
+        setState('error');
+        setError('ID de pagamento não encontrado. Se você acabou de fazer o pagamento, aguarde alguns instantes e tente novamente.');
+        return;
+      }
+      setState('pending');
+      // Iniciar polling para verificar se pagamento foi aprovado
+      startPolling(paymentId);
+      return;
+    }
+
+    // Para outros casos, payment_id é obrigatório
     if (!paymentId) {
       setState('error');
       setError('ID de pagamento não encontrado na URL');
@@ -45,7 +62,54 @@ function ThankYouContent() {
     }
 
     fetchPaymentData(paymentId);
-  }, [paymentId]);
+  }, [paymentId, status]);
+
+  // Limpar polling ao desmontar
+  useEffect(() => {
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+    };
+  }, [pollingInterval]);
+
+  // Polling para verificar se pagamento foi aprovado
+  const startPolling = (id: string) => {
+    let attempts = 0;
+    const maxAttempts = 180; // 15 minutos (180 * 5s = 900s)
+
+    // Verificar a cada 5 segundos
+    const interval = setInterval(async () => {
+      attempts++;
+
+      // Timeout após 15 minutos (para boleto/métodos lentos)
+      if (attempts >= maxAttempts) {
+        clearInterval(interval);
+        setPollingInterval(null);
+        console.log('[Polling] Timeout após 15 minutos. Usuário deve recarregar manualmente.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/payment-data?payment_id=${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            // Pagamento aprovado! Parar polling e mostrar formulário
+            clearInterval(interval);
+            setPollingInterval(null);
+            setPaymentData(data.data);
+            setState(data.data.hasNascimento ? 'complete' : 'form');
+          }
+        }
+      } catch (err) {
+        // Continuar tentando
+        console.log('Aguardando aprovação do pagamento...', `(${attempts}/${maxAttempts})`);
+      }
+    }, 5000);
+
+    setPollingInterval(interval);
+  };
 
   const fetchPaymentData = async (id: string) => {
     try {
@@ -128,6 +192,234 @@ function ThankYouContent() {
         <div className="text-center">
           <Loader2 className="w-12 h-12 text-amber-500 animate-spin mx-auto mb-4" />
           <p className="text-xl text-zinc-400">Carregando seus dados...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // PENDING STATE (PIX aguardando pagamento)
+  if (state === 'pending') {
+    return (
+      <div className="projeto45-container min-h-screen">
+        <div className="container mx-auto px-4 py-12 md:py-20">
+          <div className="max-w-3xl mx-auto">
+            {/* Logo */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex justify-center mb-12"
+            >
+              <BrandLogo size="sm" />
+            </motion.div>
+
+            {/* Icon Animado */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center mb-8"
+            >
+              <div className="relative">
+                <motion.div
+                  className="w-24 h-24 bg-yellow-500/20 rounded-full flex items-center justify-center"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Loader2 className="w-16 h-16 text-yellow-500 animate-spin" />
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* Título */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-center mb-12"
+            >
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+                Aguardando confirmação do pagamento
+              </h1>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                {paymentType === 'bank_transfer' ? (
+                  <>Seu PIX foi gerado! Assim que confirmarmos o pagamento, você poderá continuar.</>
+                ) : paymentType === 'ticket' ? (
+                  <>Seu boleto foi gerado! Após o pagamento (1-3 dias úteis), você receberá um email de confirmação.</>
+                ) : paymentType === 'atm' ? (
+                  <>Pagamento em lotérica gerado! Após efetuar o pagamento, você receberá um email de confirmação.</>
+                ) : (
+                  <>Estamos aguardando a confirmação do seu pagamento. Isso pode levar alguns minutos.</>
+                )}
+              </p>
+            </motion.div>
+
+            {/* Instruções */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="bg-zinc-900 border border-yellow-500/30 rounded-2xl p-8 md:p-12 mb-8"
+            >
+              <h2 className="text-2xl font-bold mb-6 text-yellow-500">
+                {paymentType === 'bank_transfer' ? '📱 Para concluir:' : '⏰ Próximos passos:'}
+              </h2>
+
+              {paymentType === 'bank_transfer' ? (
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">1.</span>
+                    <span>Abra o app do seu banco</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">2.</span>
+                    <span>Acesse a área PIX</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">3.</span>
+                    <span>Escaneie o QR Code ou cole o código Pix Copia e Cola</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">4.</span>
+                    <span><strong>Confirme o pagamento</strong></span>
+                  </div>
+                  <div className="flex gap-3 mt-6 p-4 bg-zinc-800 rounded-lg">
+                    <span className="text-yellow-500">✓</span>
+                    <span>Após o pagamento, <strong>esta página será atualizada automaticamente</strong> em alguns segundos</span>
+                  </div>
+                </div>
+              ) : paymentType === 'ticket' ? (
+                // Boleto - instruções específicas
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">1.</span>
+                    <span>Seu boleto foi gerado e enviado para o email cadastrado</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">2.</span>
+                    <span>Você pode pagar em qualquer banco, lotérica ou app de pagamentos</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">3.</span>
+                    <span>Após o pagamento, <strong>o banco pode levar de 1 a 3 dias úteis</strong> para processar</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">4.</span>
+                    <span>Você receberá um <strong>email de confirmação</strong> assim que constatarmos o pagamento</span>
+                  </div>
+                  <div className="flex gap-3 mt-6 p-4 bg-zinc-800 rounded-lg">
+                    <span className="text-yellow-500">✓</span>
+                    <span><strong>Pode fechar esta página!</strong> Você receberá um email com os próximos passos quando o pagamento for confirmado.</span>
+                  </div>
+                </div>
+              ) : paymentType === 'atm' ? (
+                // Lotérica/ATM - instruções específicas
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">1.</span>
+                    <span>Seu código de pagamento foi gerado e enviado para o email cadastrado</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">2.</span>
+                    <span>Leve o código ou o email impresso até uma lotérica ou correspondente bancário</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">3.</span>
+                    <span>Após efetuar o pagamento, <strong>pode levar algumas horas</strong> para processar</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">4.</span>
+                    <span>Você receberá um <strong>email de confirmação</strong> assim que constatarmos o pagamento</span>
+                  </div>
+                  <div className="flex gap-3 mt-6 p-4 bg-zinc-800 rounded-lg">
+                    <span className="text-yellow-500">✓</span>
+                    <span><strong>Pode fechar esta página!</strong> Você receberá um email com os próximos passos quando o pagamento for confirmado.</span>
+                  </div>
+                </div>
+              ) : (
+                // Cartão de crédito ou método genérico
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">•</span>
+                    <span>Estamos verificando seu pagamento com a operadora</span>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="text-yellow-500">•</span>
+                    <span>Isso pode levar alguns minutos</span>
+                  </div>
+                  <div className="flex gap-3 mt-6 p-4 bg-zinc-800 rounded-lg">
+                    <span className="text-yellow-500">✓</span>
+                    <span><strong>Aguarde nesta página.</strong> Você será redirecionado automaticamente quando o pagamento for confirmado.</span>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+
+            {/* Status */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="bg-yellow-500/10 border border-yellow-500 rounded-xl p-6 text-center"
+            >
+              <p className="text-white font-semibold mb-2 flex items-center justify-center gap-2">
+                <Loader2 className="w-5 h-5 animate-spin" />
+                {paymentType === 'bank_transfer'
+                  ? 'Verificando pagamento PIX automaticamente...'
+                  : paymentType === 'ticket' || paymentType === 'atm'
+                  ? 'Verificando pagamento (esta verificação irá parar em 15 minutos)'
+                  : 'Verificando pagamento automaticamente...'}
+              </p>
+              <p className="text-gray-400 text-sm">
+                {paymentType === 'bank_transfer'
+                  ? 'Atualizando a cada 5 segundos - geralmente leva menos de 1 minuto'
+                  : paymentType === 'ticket' || paymentType === 'atm'
+                  ? 'Você receberá um email quando o pagamento for confirmado'
+                  : 'Atualizando a cada 5 segundos'}
+              </p>
+            </motion.div>
+
+            {/* Suporte */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="text-center mt-8"
+            >
+              <p className="text-gray-400 text-sm mb-4">
+                {paymentType === 'bank_transfer'
+                  ? 'Problemas com o pagamento PIX?'
+                  : paymentType === 'ticket'
+                  ? 'Não recebeu o boleto ou precisa de ajuda?'
+                  : paymentType === 'atm'
+                  ? 'Não recebeu o código de pagamento?'
+                  : 'Problemas com o pagamento?'}
+              </p>
+              <a
+                href={`https://wa.me/5511950822727?text=Olá! Preciso de ajuda com meu pagamento${
+                  paymentType === 'bank_transfer'
+                    ? ' PIX'
+                    : paymentType === 'ticket'
+                    ? ' por boleto'
+                    : paymentType === 'atm'
+                    ? ' em lotérica'
+                    : ''
+                } - Payment ID: ${paymentId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-[var(--gold-primary)] hover:text-[var(--gold-light)] transition-colors"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Falar com o suporte
+              </a>
+            </motion.div>
+          </div>
         </div>
       </div>
     );

@@ -24,7 +24,89 @@
 
 ---
 
-## 🎯 Teste 0: Testar Página de Erro (Nova!)
+## 🎯 Teste 0: Testar Fluxos de Pagamento
+
+### **Cenário 0: PIX Pendente (Aguardando Pagamento)**
+
+Simula quando usuário gera PIX mas ainda não pagou:
+
+**Como testar:**
+1. Acesse `/projeto45dias` e clique em "GARANTIR MINHA VAGA"
+2. No Mercado Pago, escolha **PIX**
+3. Insira seu email
+4. **Antes de pagar**, clique em "Voltar à loja"
+5. Você será redirecionado para `/obrigado?status=pending&payment_type=bank_transfer`
+
+**✅ Verificações:**
+- [ ] Ícone **amarelo** pulsante (Loader2)
+- [ ] Título: "Aguardando confirmação do pagamento"
+- [ ] Instruções específicas para PIX (4 passos)
+- [ ] Badge: "Verificando pagamento automaticamente... Atualizando a cada 5 segundos"
+- [ ] Link para suporte no WhatsApp
+- [ ] Página **atualiza automaticamente** quando pagamento for confirmado (polling a cada 5s)
+
+**Teste de Polling:**
+- Após gerar o PIX, efetue o pagamento pelo app do banco
+- A página deve detectar automaticamente em até 5 segundos
+- Deve redirecionar para o formulário de data de nascimento
+
+### **Cenário 0B: Boleto Pendente (1-3 dias úteis)**
+
+Simula quando usuário gera boleto mas ainda não pagou:
+
+**Como testar:**
+1. Acesse `/projeto45dias` e clique em "GARANTIR MINHA VAGA"
+2. No Mercado Pago, escolha **Boleto Bancário**
+3. Insira dados e gere o boleto
+4. **Antes de pagar**, clique em "Voltar à loja"
+5. Você será redirecionado para `/obrigado?status=pending&payment_type=ticket`
+
+**✅ Verificações:**
+- [ ] Ícone **amarelo** pulsante (Loader2)
+- [ ] Título: "Aguardando confirmação do pagamento"
+- [ ] Mensagem específica: "Seu boleto foi gerado! Após o pagamento (1-3 dias úteis)..."
+- [ ] **4 passos específicos para boleto** (gerado, onde pagar, prazo, email)
+- [ ] Destaque: "**Pode fechar esta página!** Você receberá um email..."
+- [ ] Badge: "Verificando pagamento (esta verificação irá parar em 15 minutos)"
+- [ ] Submensagem: "Você receberá um email quando o pagamento for confirmado"
+- [ ] Link para suporte: "Não recebeu o boleto ou precisa de ajuda?"
+
+**Comportamento esperado:**
+- Polling continua por até 15 minutos
+- Após 15 minutos, polling para automaticamente
+- Usuário pode fechar a página e aguardar email de confirmação
+- Quando boleto for pago (1-3 dias úteis), webhook processa e envia email
+
+### **Cenário 0C: Lotérica/ATM Pendente (horas)**
+
+Simula quando usuário gera código para lotérica mas ainda não pagou:
+
+**Como testar:**
+1. Acesse `/projeto45dias` e clique em "GARANTIR MINHA VAGA"
+2. No Mercado Pago, escolha **Pagamento em Lotérica** (ou correspondente bancário)
+3. Insira dados e gere o código
+4. **Antes de pagar**, clique em "Voltar à loja"
+5. Você será redirecionado para `/obrigado?status=pending&payment_type=atm`
+
+**✅ Verificações:**
+- [ ] Ícone **amarelo** pulsante (Loader2)
+- [ ] Título: "Aguardando confirmação do pagamento"
+- [ ] Mensagem específica: "Pagamento em lotérica gerado! Após efetuar o pagamento..."
+- [ ] **4 passos específicos para lotérica** (código gerado, onde pagar, prazo, email)
+- [ ] Destaque: "**Pode fechar esta página!** Você receberá um email..."
+- [ ] Badge: "Verificando pagamento (esta verificação irá parar em 15 minutos)"
+- [ ] Submensagem: "Você receberá um email quando o pagamento for confirmado"
+- [ ] Link para suporte: "Não recebeu o código de pagamento?"
+
+**Comportamento esperado:**
+- Polling continua por até 15 minutos
+- Após 15 minutos, polling para automaticamente
+- Usuário pode fechar a página e aguardar email de confirmação
+- Quando pagamento for efetuado na lotérica, webhook processa e envia email
+
+---
+
+## 🎯 Teste 1: Testar Página de Erro (Nova!)
 
 ### **Cenário A: Cancelamento - Voltou sem pagar**
 
@@ -74,7 +156,7 @@ http://localhost:3000/projeto45dias/erro?payment_id=12345678&status=rejected&col
 
 ---
 
-## 🎯 Teste 1: Simular Pagamento Completo
+## 🎯 Teste 2: Simular Pagamento Completo
 
 ### **Passo 1: Criar pagamento fictício**
 
@@ -164,9 +246,9 @@ Volte ao Google Sheets e verifique:
 
 ---
 
-## 🎯 Teste 2: Testar APIs Individualmente
+## 🎯 Teste 3: Testar APIs Individualmente
 
-### **Teste 2.1: API /payment-data**
+### **Teste 3.1: API /payment-data**
 
 Com um `payment_id` válido da planilha, teste:
 
@@ -201,7 +283,7 @@ curl "http://localhost:3000/api/payment-data"
 # Deve retornar 400
 ```
 
-### **Teste 2.2: API /complete-registration**
+### **Teste 3.2: API /complete-registration**
 
 ```bash
 curl -X POST http://localhost:3000/api/complete-registration \
@@ -253,7 +335,7 @@ curl -X POST http://localhost:3000/api/complete-registration \
 
 ---
 
-## 🎯 Teste 3: Testar Checkout Real (botão na página)
+## 🎯 Teste 4: Testar Checkout Real (botão na página)
 
 ### **Passo 1: Acessar landing page**
 
@@ -302,7 +384,7 @@ Preencha:
 
 ---
 
-## 🎯 Teste 4: Fluxo Completo (E2E)
+## 🎯 Teste 5: Fluxo Completo (E2E)
 
 ### **Cenário: Nova compra do zero**
 

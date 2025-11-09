@@ -34,6 +34,24 @@ export async function POST(req: Request) {
         console.log('[Webhook MP] Pagamento aprovado:', payment.id);
 
         try {
+          // 0. Verificar se payment já existe (evitar duplicatas)
+          const sheetsClient = SheetsClient.create({
+            privateKey: process.env.GOOGLE_SHEETS_PRIVATE_KEY!,
+            clientEmail: process.env.GOOGLE_SHEETS_CLIENT_EMAIL!,
+            sheetId: process.env.GOOGLE_SHEETS_SHEET_ID!,
+            sheetName: process.env.GOOGLE_SHEETS_SHEET_NAME || 'Sheet1',
+          });
+
+          const existingRow = await sheetsClient.findRowByColumn({
+            searchColumn: 'Payment ID',
+            searchValue: String(payment.id),
+          });
+
+          if (existingRow) {
+            console.log('[Webhook MP] ⚠️ Payment já existe no Sheets (duplicata evitada):', payment.id);
+            return; // Não processar novamente
+          }
+
           // 1. Extrair dados do payer (Mercado Pago)
           const payer = payment.payer as any; // Type assertion para acessar propriedades dinâmicas
           const nome = payer?.first_name && payer?.last_name
@@ -51,13 +69,6 @@ export async function POST(req: Request) {
           const splitSeyune = payment.metadata?.split_seyune || (precoTotal * 0.4);
 
           // 3. Salvar na planilha Google Sheets (10 colunas)
-          const sheetsClient = SheetsClient.create({
-            privateKey: process.env.GOOGLE_SHEETS_PRIVATE_KEY!,
-            clientEmail: process.env.GOOGLE_SHEETS_CLIENT_EMAIL!,
-            sheetId: process.env.GOOGLE_SHEETS_SHEET_ID!,
-            sheetName: process.env.GOOGLE_SHEETS_SHEET_NAME || 'Sheet1',
-          });
-
           await sheetsClient.addRow({
             Data: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
             Nome: nome,
