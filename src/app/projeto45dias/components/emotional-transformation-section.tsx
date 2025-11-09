@@ -12,11 +12,11 @@ const transformations = [
     age: 28,
     mainResult: '+5kg de massa magra',
     before: {
-      image: '/projeto45dias/transformacao/enzo/antes.png',
+      image: '/projeto45dias/transformacao/gabriela/antes.png',
       alt: 'Mulher insegura e desmotivada',
     },
     after: {
-      image: '/projeto45dias/transformacao/enzo/depois.png',
+      image: '/projeto45dias/transformacao/gabriela/depois.png',
       alt: 'Mulher confiante e energizada',
     },
     achievements: [
@@ -31,11 +31,11 @@ const transformations = [
     age: 35,
     mainResult: 'Ganho de energia e disposição',
     before: {
-      image: '/projeto45dias/transformacao/enzo/antes.png',
+      image: '/projeto45dias/transformacao/rodrigo/antes.png',
       alt: 'Homem cansado e sem energia',
     },
     after: {
-      image: '/projeto45dias/transformacao/enzo/depois.png',
+      image: '/projeto45dias/transformacao/rodrigo/depois.png',
       alt: 'Homem energizado e motivado',
     },
     achievements: [
@@ -46,34 +46,15 @@ const transformations = [
   },
   {
     id: 3,
-    name: 'AMANDA COSTA',
-    age: 31,
-    mainResult: 'Relação saudável com comida',
-    before: {
-      image: '/projeto45dias/transformacoes/mulher-estressada-antes.jpg',
-      alt: 'Mulher estressada com a alimentação',
-    },
-    after: {
-      image: '/projeto45dias/transformacoes/mulher-feliz-depois.jpg',
-      alt: 'Mulher feliz e em paz',
-    },
-    achievements: [
-      'Deixou de contar calorias obsessivamente',
-      'Voltou a ter vida social',
-      'Estabeleceu relação equilibrada com comida',
-    ],
-  },
-  {
-    id: 4,
     name: 'LUCAS OLIVEIRA',
     age: 29,
     mainResult: 'Autoconfiança e foco',
     before: {
-      image: '/projeto45dias/transformacao/enzo/antes.png',
+      image: '/projeto45dias/transformacao/lucas/antes.png',
       alt: 'Homem inseguro e sem direção',
     },
     after: {
-      image: '/projeto45dias/transformacao/enzo/depois.png',
+      image: '/projeto45dias/transformacao/lucas/depois.png',
       alt: 'Homem confiante e determinado',
     },
     achievements: [
