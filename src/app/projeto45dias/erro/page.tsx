@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { XCircle, RefreshCw, MessageCircle, ArrowLeft, AlertCircle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { BrandLogo } from '../components/brand-logo';
 
-export default function ErrorPage() {
+function ErrorPageContent() {
   const searchParams = useSearchParams();
   const whatsappSupportLink = 'https://wa.me/5511950822727?text=Olá! Tive um problema com o pagamento do Projeto 45 Graus';
 
@@ -247,5 +247,30 @@ export default function ErrorPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Loading fallback
+function ErrorPageLoading() {
+  return (
+    <div className="projeto45-container min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <motion.div
+          className="w-20 h-20 border-4 border-[#d4af37] border-t-transparent rounded-full mx-auto"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
+        <p className="text-white mt-4">Carregando...</p>
+      </div>
+    </div>
+  );
+}
+
+// Componente principal com Suspense
+export default function ErrorPage() {
+  return (
+    <Suspense fallback={<ErrorPageLoading />}>
+      <ErrorPageContent />
+    </Suspense>
   );
 }
