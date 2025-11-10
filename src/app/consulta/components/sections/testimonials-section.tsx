@@ -47,12 +47,12 @@ export function TestimonialsSection() {
         <div className="grid md:grid-cols-2 gap-6 mt-16">
           {testimonials.map((item, index) => (
             <ScrollReveal key={index} delay={index * 0.15}>
-              <div className="bg-background rounded-2xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg">
-                <div>
+              <div className="bg-background rounded-2xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg h-full flex flex-col">
+                <div className="flex flex-col flex-grow">
                   <p className="font-heading text-2xl font-semibold text-primary mb-4">
                     {item.quote}
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed flex-grow">
                     {item.story}
                   </p>
                 </div>

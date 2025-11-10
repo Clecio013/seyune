@@ -43,11 +43,11 @@ export function PainPointsSection() {
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {painPoints.map((painPoint, index) => (
             <ScrollReveal key={index} delay={index * 0.1}>
-              <div className="bg-background rounded-2xl p-8 border border-border hover:border-accent/50 transition-all duration-300 hover:shadow-lg">
+              <div className="bg-background rounded-2xl p-8 border border-border hover:border-accent/50 transition-all duration-300 hover:shadow-lg h-full flex flex-col">
                 <h3 className="font-heading text-2xl font-semibold text-accent mb-4">
                   {painPoint.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed flex-grow">
                   {painPoint.description}
                 </p>
               </div>
