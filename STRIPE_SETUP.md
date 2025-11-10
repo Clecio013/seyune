@@ -136,7 +136,7 @@ STRIPE_PRICE_ID=price_YOUR_PRICE_ID_HERE
 # Outros (já existentes)
 NEXT_PUBLIC_URL=http://localhost:3000
 NEXT_PUBLIC_WHATSAPP_GROUP_LINK=https://chat.whatsapp.com/xxxxx
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxx
+RESEND_API_KEY=re_YOUR_RESEND_KEY_HERE
 GOOGLE_SHEETS_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
 GOOGLE_SHEETS_CLIENT_EMAIL=xxx@xxx.iam.gserviceaccount.com
 GOOGLE_SHEETS_SHEET_ID=1abc...
