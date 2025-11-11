@@ -48,6 +48,11 @@ const faqs = [
       'Você tem 7 dias de garantia incondicional. Se por qualquer motivo você não estiver satisfeito, devolvemos 100% do seu dinheiro. Sem burocracia, sem pegadinhas.',
   },
   {
+    question: 'Posso pagar via Pix?',
+    answer:
+      'Sim! Se você preferir pagar via Pix, entre em contato conosco pelo WhatsApp e enviaremos um link personalizado para pagamento. O processo é rápido e sua vaga é confirmada assim que o pagamento for identificado.',
+  },
+  {
     question: 'O que está incluso exatamente?',
     answer:
       'Você recebe: (1) Consulta de 30min com a Seyune (Nutricionista), (2) Consulta de 30min com o Amauri (Personal Trainer), (3) Plano alimentar 100% personalizado, (4) Planilha de treino individualizada para 45 dias, (5) Acesso ao grupo VIP no WhatsApp, (6) Suporte durante todo o programa, e (7) Garantia de 7 dias.',

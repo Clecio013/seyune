@@ -10,7 +10,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "email": "email dev --dir src/lib/@lumes/email/templates"
+    "email": "email dev --dir src/lib/@lumes/email/templates",
+    "stripe:listen": "stripe listen --forward-to http://localhost:3000/api/stripe/webhook"
   },
   "dependencies": {
     "@mercadopago/sdk-react": "^1.0.6",

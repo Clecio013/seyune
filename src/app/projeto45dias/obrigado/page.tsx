@@ -547,48 +547,84 @@ function ThankYouContent() {
                         <ChevronDownIcon className="w-4 h-4 text-zinc-400" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-zinc-900 border-zinc-700" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={nascimento}
-                        onSelect={(date) => {
-                          setNascimento(date);
-                          setIsPopoverOpen(false);
-                        }}
-                        locale={ptBR}
-                        captionLayout="dropdown"
-                        hidden={{
-                          before: minDate,
-                          after: maxDate,
-                        }}
-                        defaultMonth={new Date(1995, 0)}
-                        disabled={(date) => date > maxDate || date < minDate}
-                        formatters={{
-                          formatMonthDropdown: (date) => {
-                            const monthName = date.toLocaleDateString('pt-BR', { month: 'long' });
-                            return monthName.charAt(0).toUpperCase() + monthName.charAt(1);
-                          },
-                          formatYearDropdown: (date) => String(date.getFullYear()),
-                          formatWeekdayName: (date) => {
-                            const weekday = date.toLocaleDateString('pt-BR', { weekday: 'short' });
-                            // Remove ponto e capitaliza primeira letra
-                            const clean = weekday.replace('.', '');
-                            return clean.charAt(0).toUpperCase() + clean.slice(1);
-                          },
-                        }}
-                        className={cn(
-                          '[&_.rdp-month_caption]:text-zinc-50',
-                          '[&_.rdp-weekday]:text-zinc-400',
-                          '[&_button]:text-zinc-50',
-                          '[&_.rdp-dropdown]:text-zinc-50 [&_.rdp-dropdown]:bg-transparent',
-                          '[&_.rdp-dropdown_root]:border-zinc-700 [&_.rdp-dropdown_root]:bg-zinc-800',
-                          '[&_.rdp-caption_label]:text-zinc-50 [&_.rdp-caption_label]:!text-zinc-50',
-                          '[&_select]:text-zinc-50',
-                          '[&_svg]:text-zinc-400',
-                          '[&_.rdp-dropdowns]:text-zinc-50',
-                          '[&_.rdp-dropdowns_root]:text-zinc-50',
-                        )}
-                      />
+                    <PopoverContent className="w-auto p-0 !bg-zinc-900 !border-zinc-700" align="start">
+                      <div className="dark">
+                        <style jsx global>{`
+                          /* Força estilos dark no Calendar - importante para garantir visibilidade */
+                          .rdp {
+                            background-color: #18181b !important;
+                            color: #fafafa !important;
+                          }
+                          .rdp select {
+                            background-color: #27272a !important;
+                            color: #fafafa !important;
+                            border-color: #3f3f46 !important;
+                          }
+                          .rdp select option {
+                            background-color: #27272a !important;
+                            color: #fafafa !important;
+                          }
+                          .rdp button {
+                            color: #fafafa !important;
+                          }
+                          .rdp button:hover {
+                            background-color: #27272a !important;
+                            color: #fafafa !important;
+                          }
+                          .rdp [data-selected-single="true"] {
+                            background-color: #f59e0b !important;
+                            color: #000 !important;
+                          }
+                        `}</style>
+                        <Calendar
+                          mode="single"
+                          selected={nascimento}
+                          onSelect={(date) => {
+                            setNascimento(date);
+                            setIsPopoverOpen(false);
+                          }}
+                          locale={ptBR}
+                          captionLayout="dropdown"
+                          hidden={{
+                            before: minDate,
+                            after: maxDate,
+                          }}
+                          defaultMonth={new Date(1995, 0)}
+                          disabled={(date) => date > maxDate || date < minDate}
+                          formatters={{
+                            formatMonthDropdown: (date) => {
+                              const monthName = date.toLocaleDateString('pt-BR', { month: 'long' });
+                              return monthName.charAt(0).toUpperCase() + monthName.charAt(1);
+                            },
+                            formatYearDropdown: (date) => String(date.getFullYear()),
+                            formatWeekdayName: (date) => {
+                              const weekday = date.toLocaleDateString('pt-BR', { weekday: 'short' });
+                              // Remove ponto e capitaliza primeira letra
+                              const clean = weekday.replace('.', '');
+                              return clean.charAt(0).toUpperCase() + clean.slice(1);
+                            },
+                          }}
+                          className={cn(
+                            '!bg-zinc-900 !text-zinc-50',
+                            // Força dark mode em todos os elementos
+                            '[&]:!bg-zinc-900',
+                            '[&_.rdp-month_caption]:!text-zinc-50',
+                            '[&_.rdp-weekday]:!text-zinc-400',
+                            '[&_button]:!text-zinc-50 [&_button]:!bg-transparent',
+                            '[&_button:hover]:!bg-zinc-800 [&_button:hover]:!text-zinc-50',
+                            '[&_.rdp-dropdown]:!text-zinc-50 [&_.rdp-dropdown]:!bg-transparent',
+                            '[&_.rdp-dropdown_root]:!border-zinc-700 [&_.rdp-dropdown_root]:!bg-zinc-800 [&_.rdp-dropdown_root]:!text-zinc-50',
+                            '[&_.rdp-caption_label]:!text-zinc-50',
+                            '[&_select]:!text-zinc-50 [&_select]:!bg-zinc-800 [&_select]:!border-zinc-700',
+                            '[&_svg]:!text-zinc-400',
+                            '[&_.rdp-dropdowns]:!text-zinc-50',
+                            '[&_.rdp-dropdowns_root]:!text-zinc-50',
+                            // Força cor nos botões de dia
+                            '[&_[data-selected-single=true]]:!bg-amber-500 [&_[data-selected-single=true]]:!text-black',
+                            '[&_[data-today=true]]:!bg-zinc-800 [&_[data-today=true]]:!text-zinc-50',
+                          )}
+                        />
+                      </div>
                     </PopoverContent>
                   </Popover>
                 </div>
