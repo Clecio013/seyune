@@ -1,15 +1,19 @@
 'use client';
 
 import { motion, type Variants } from 'framer-motion';
-import Image from 'next/image';
-import { CheckCircle2 } from 'lucide-react';
+import {
+  EmagrecimentoSustentavelCover,
+  NaoSabotarProcessoCover,
+  GanhoMassaCover,
+  FestasFimAnoCover,
+  ReceitasImpressionar,
+} from './bonus-covers';
 
 interface Bonus {
   id: string;
   title: string;
   description: string;
-  image: string;
-  imageAlt: string;
+  CoverComponent: React.ComponentType;
 }
 
 const bonuses: Bonus[] = [
@@ -18,40 +22,35 @@ const bonuses: Bonus[] = [
     title: 'Guia do Emagrecimento Sustentável',
     description:
       'Conceitos de déficit calórico, fome física x emocional, estratégias para manter constância, checklist de hábitos e metas semanais, receitas práticas e leves.',
-    image: '/projeto45dias/bonuses/emagrecimento-sustentavel.png',
-    imageAlt: 'Capa do Guia do Emagrecimento Sustentável',
+    CoverComponent: EmagrecimentoSustentavelCover,
   },
   {
     id: 'nao-sabotar-processo',
     title: 'Como Não Sabotar Seu Processo',
     description:
       'Gatilhos comuns e como lidar com eles, estratégias de organização da alimentação (compras, marmitas, refeições fora de casa), ferramentas de autoconhecimento alimentar.',
-    image: '/projeto45dias/bonuses/nao-sabotar-processo.png',
-    imageAlt: 'Capa do Guia Como Não Sabotar Seu Processo',
+    CoverComponent: NaoSabotarProcessoCover,
   },
   {
     id: 'ganho-massa',
     title: 'Guia Prático para Ganho de Massa',
     description:
       'Explicação sobre superávit calórico, proteína e recuperação muscular, erros comuns que impedem o progresso, sugestão de cardápio + exemplos de lanches proteicos e receitas.',
-    image: '/projeto45dias/bonuses/ganho-massa.png',
-    imageAlt: 'Capa do Guia Prático para Ganho de Massa',
+    CoverComponent: GanhoMassaCover,
   },
   {
     id: 'festas-fim-ano',
     title: 'Guia de Sobrevivência nas Festas',
     description:
       'Dicas para lidar com rotina fora do eixo, viagens e eventos sociais, como montar um prato equilibrado, estratégias para equilibrar prazer e saúde, mini planner de metas para o novo ano.',
-    image: '/projeto45dias/bonuses/festas-fim-ano.png',
-    imageAlt: 'Capa do Guia de Sobrevivência nas Festas de Fim de Ano',
+    CoverComponent: FestasFimAnoCover,
   },
   {
     id: 'receitas-impressionar',
     title: 'Receitas para Impressionar',
     description:
       'Petiscos saudáveis, molhos funcionais, sobremesas equilibradas e drinks sem álcool para você aproveitar sem sair do plano.',
-    image: '/projeto45dias/bonuses/receitas-impressionar.png',
-    imageAlt: 'Capa do Guia de Receitas para Impressionar',
+    CoverComponent: ReceitasImpressionar,
   },
 ];
 
@@ -122,23 +121,9 @@ export default function BonusSection() {
               variants={cardVariants}
               className="projeto45-card group relative overflow-hidden"
             >
-              {/* Badge "Incluído" */}
-              <div className="absolute top-4 right-4 z-10">
-                <div className="bg-[var(--success-green)] text-white px-3 py-1.5 rounded-full text-sm font-bold flex items-center gap-1.5 shadow-lg">
-                  <CheckCircle2 className="w-4 h-4" />
-                  Incluído
-                </div>
-              </div>
-
-              {/* Imagem da Capa */}
-              <div className="relative w-full aspect-[3/4] mb-6 overflow-hidden rounded-lg bg-[var(--bg-dark)]">
-                <Image
-                  src={bonus.image}
-                  alt={bonus.imageAlt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+              {/* Capa em Código */}
+              <div className="relative w-full aspect-[3/4] mb-6 overflow-hidden rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]">
+                <bonus.CoverComponent />
               </div>
 
               {/* Conteúdo */}

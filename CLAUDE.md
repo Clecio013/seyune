@@ -708,6 +708,100 @@ Quando libs estiverem estáveis e testadas:
 
 ---
 
+## Meta Ads - Campanhas e Estratégia
+
+### Regras Fundamentais (SEMPRE seguir)
+
+**REGRA #1 - CRÍTICA:** 1 criativo = 1 campanha separada
+
+Meta Ads NÃO performa bem com múltiplos anúncios diferentes no mesmo conjunto de anúncios. Quando testar criativos diferentes (vídeos, imagens, copy), SEMPRE criar campanhas separadas:
+
+❌ **ERRADO:**
+```
+Campanha: Público Frio SP
+  └─ Conjunto: SP F24-38
+      ├─ AD01 - Video Travada
+      ├─ AD02 - Video Motivacao
+      └─ AD03 - Imagem
+```
+
+✅ **CORRETO:**
+```
+Campanha 1: Público Frio SP - Travada
+  └─ Conjunto: SP F24-38
+      └─ AD01 - Video Travada
+
+Campanha 2: Público Frio SP - Motivacao
+  └─ Conjunto: SP F24-38 (MESMO público)
+      └─ AD01 - Video Motivacao
+```
+
+**Exceção:** Múltiplos anúncios no mesmo conjunto APENAS quando:
+- Anúncio é EXATAMENTE igual (mesmo vídeo, mesma copy)
+- Variação é APENAS técnica (formato 9:16 vs 1:1)
+
+**Por quê:** Meta divide aprendizado entre múltiplos anúncios, performance fica medíocre. Com campanhas separadas, Meta aprende rápido qual performa melhor e concentra budget automaticamente.
+
+---
+
+### Estrutura de Campanha Recomendada
+
+**Budget Total:** R$500
+
+```
+📁 Campanha 1: [CONVERSAO] [F] Consulta Individual SP - Travada (R$250)
+   └─ Vídeo principal (dor emocional)
+
+📁 Campanha 2: [CONVERSAO] [F] Consulta Individual SP - Motivacao (R$100)
+   └─ Vídeo alternativo (teste de abordagem)
+
+📁 Campanha 3: [CONVERSAO] [Q] Retargeting Site 7D (R$150)
+   └─ Vídeo específico de retargeting (ativar após 3-5 dias)
+```
+
+**Público idêntico** nas campanhas 1 e 2 (mesmo local, idade, gênero, interesses) para testar APENAS criativos.
+
+---
+
+### Documentação Completa
+
+Para criar ou otimizar campanhas Meta Ads, consultar:
+
+1. **Regras Fundamentais:** `/docs/meta-ads-rules.md` ← **SEMPRE SEGUIR**
+   - 10 regras validadas que Meta performa bem
+   - Troubleshooting de problemas comuns
+   - Checklist de validação pré-lançamento
+
+2. **Guia de Setup:** `/docs/meta-ads-setup-guide.md`
+   - Passo-a-passo detalhado de configuração
+   - Copy completa para cada criativo
+   - Configuração de eventos e tracking
+
+3. **Nomenclatura:** `/docs/nomeclatura-campanha.md`
+   - Sistema padronizado de nomes
+   - Exemplos práticos
+
+4. **Pixel e Eventos:** `/docs/pixel-events-checklist.md`
+   - Validação de tracking
+   - Troubleshooting de eventos
+
+---
+
+### Regras Rápidas (Quick Reference)
+
+- ✅ **Objetivo:** Vendas/Conversões (não Tráfego ou Engajamento)
+- ✅ **Evento:** `WhatsAppClick` (conversão principal)
+- ✅ **Local:** Site APENAS (NÃO usar Formulários Instantâneos)
+- ✅ **Budget:** Nível de campanha (não conjunto)
+- ✅ **Posicionamentos:** Automáticos
+- ✅ **Público para testes:** IDÊNTICO (mudar apenas criativo)
+- ✅ **Retargeting:** Campanha separada, criativo específico
+- ✅ **Período de aprendizado:** NÃO mexer dias 1-3
+- ✅ **Métrica principal:** Custo por conversão (CPL ideal: R$30-70)
+- ✅ **UTMs:** Únicos por campanha
+
+---
+
 ## Notas Importantes
 
 - ⚠️ Copy é criada de forma **livre e natural**, `/docs/copy.md` é apenas **direcionamento estratégico**
@@ -720,5 +814,5 @@ Quando libs estiverem estáveis e testadas:
 
 ---
 
-**Última atualização:** 2025-11-06
-**Versão:** 1.1
+**Última atualização:** 2025-11-11
+**Versão:** 1.2

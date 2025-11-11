@@ -56,21 +56,21 @@ const professionals = [
     role: 'Personal Trainer',
     credentials: 'CREF 155584-G/SP',
     image: '/projeto45dias/amauri/ensaio.png',
-    bio: '[BIO DO AMAURI - Formação, especialização, anos de experiência. Ex: "Formado em Educação Física pela [Universidade], especializado em Treinamento Funcional e Hipertrofia."]',
+    bio: 'Formado em Educação Física pela Uniitalo, especialista em treino de hipertrofia e emagrecimento. Com curso de extensão pela Core360 focado em treinamento funcional, desenvolvo programas que aliam técnica, segurança e resultados comprovados.',
     approach:
-      '[ABORDAGEM DO AMAURI - Como ele trabalha, filosofia de treino. Ex: "Acredito que treino eficiente não precisa ser sofrimento. Meu foco é criar programas progressivos que se encaixam na sua rotina e geram resultados reais."]',
+      'Meu método de treinamento induz você a superar suas próprias expectativas. Acredito que quando você entende que a dedicação é o caminho, os resultados surgem naturalmente. Treino não é sobre sofrer — é sobre evoluir de forma consistente e sustentável.',
     highlights: [
       {
         icon: Target,
-        text: 'Treinos personalizados',
+        text: 'Especialista em hipertrofia',
       },
       {
         icon: Heart,
-        text: 'Progressão inteligente',
+        text: 'Treinamento funcional',
       },
       {
         icon: Award,
-        text: 'Resultados sustentáveis',
+        text: 'Superação de expectativas',
       },
     ],
   },
