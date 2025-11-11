@@ -147,13 +147,19 @@ export default function BonusSection() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="text-center mt-16"
         >
-          <p className="text-lg md:text-xl text-[var(--text-muted)] mb-6">
-            Todos esses materiais são seus{' '}
-            <strong className="text-[var(--gold-primary)]">
-              para sempre
-            </strong>
-            , mesmo após os 45 dias.
-          </p>
+          <div className="bg-[var(--bg-dark)] border-2 border-[var(--gold-primary)] rounded-2xl p-8 md:p-10 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-[var(--text-light)] mb-4">
+              📚 Esses <strong className="text-[var(--gold-primary)]">5 guias exclusivos</strong> são seus{' '}
+              <strong className="text-[var(--gold-primary)]">para sempre</strong>, mesmo após os 45 dias.
+            </p>
+            <p className="text-base text-[var(--text-muted)] mb-3">
+              💡 Diferente do acesso aos apps WebDiet e MFit Personal (válidos por 45 dias),
+              esses materiais ficam com você permanentemente para consultar sempre que precisar.
+            </p>
+            <p className="text-base text-[var(--text-muted)]">
+              📩 <strong className="text-[var(--text-light)]">Importante:</strong> Após a compra, entraremos em contato para enviar todos os materiais e credenciais de acesso.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -43,11 +43,6 @@ const faqs = [
       'Não precisa! O programa é para qualquer pessoa, independente do nível atual. Os planos são personalizados considerando sua experiência, condicionamento físico e objetivos. Se você nunca treinou ou está parado há anos, tudo bem – o plano será adaptado para você.',
   },
   {
-    question: 'E se eu não gostar ou não me adaptar?',
-    answer:
-      'Você tem 7 dias de garantia incondicional. Se por qualquer motivo você não estiver satisfeito, devolvemos 100% do seu dinheiro. Sem burocracia, sem pegadinhas.',
-  },
-  {
     question: 'Posso pagar via Pix?',
     answer:
       'Sim! Se você preferir pagar via Pix, entre em contato conosco pelo WhatsApp e enviaremos um link personalizado para pagamento. O processo é rápido e sua vaga é confirmada assim que o pagamento for identificado.',
@@ -55,7 +50,7 @@ const faqs = [
   {
     question: 'O que está incluso exatamente?',
     answer:
-      'Você recebe: (1) Consulta de 30min com a Seyune (Nutricionista), (2) Consulta de 30min com o Amauri (Personal Trainer), (3) Plano alimentar 100% personalizado, (4) Planilha de treino individualizada para 45 dias, (5) Acesso ao grupo VIP no WhatsApp, (6) Suporte durante todo o programa, e (7) Garantia de 7 dias.',
+      'Você recebe: (1) Consulta de 30min com a Seyune (Nutricionista), (2) Consulta de 30min com o Amauri (Personal Trainer), (3) Plano alimentar 100% personalizado, (4) Planilha de treino individualizada para 45 dias, (5) Acesso aos apps WebDiet e MFit Personal por 45 dias, (6) Acesso ao grupo VIP no WhatsApp por 45 dias, e (7) 5 guias exclusivos que são seus para sempre (emagrecimento sustentável, não sabotar seu processo, ganho de massa, sobrevivência nas festas e receitas saudáveis).',
   },
   {
     question: 'Por que o preço aumenta nos próximos lotes?',
@@ -66,6 +61,16 @@ const faqs = [
     question: 'Como funcionam as consultas? São online ou presencial?',
     answer:
       'As consultas são online, via Google Meet ou WhatsApp, com duração de 30 minutos cada. Você agenda diretamente com cada profissional após a compra. Depois das consultas, os planos personalizados são entregues por e-mail.',
+  },
+  {
+    question: 'O acesso aos apps WebDiet e MFit é permanente?',
+    answer:
+      'O acesso aos apps WebDiet e MFit Personal é válido por 45 dias, o período completo do programa. Já os 5 guias exclusivos (materiais em PDF) são seus para sempre, mesmo após o término dos 45 dias. Você poderá consultá-los sempre que precisar.',
+  },
+  {
+    question: 'Como e quando vou receber os materiais e acessos?',
+    answer:
+      'Após a confirmação do pagamento, você receberá um e-mail e será adicionado ao grupo VIP do WhatsApp. É através do grupo que entraremos em contato para enviar os 5 guias exclusivos em PDF e as credenciais de acesso aos apps WebDiet e MFit Personal. Você também receberá as orientações para agendar suas consultas individuais com a Seyune e o Amauri.',
   },
 ];
 

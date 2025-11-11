@@ -136,16 +136,9 @@ export async function POST(req: NextRequest) {
 
               const firstName = customerName.split(' ')[0];
 
-              // Em desenvolvimento (Resend free), só pode enviar para email do dono da conta
-              // Em produção, enviar para o cliente real
-              const isDevelopment = process.env.NODE_ENV === 'development';
-              const emailTo = isDevelopment
-                ? 'clecio.almeida@lumesdigital.com.br' // Email do dono (teste)
-                : customerEmail; // Email real do cliente
-
               await emailClient.send({
-                to: emailTo,
-                subject: `✅ [${isDevelopment ? 'TESTE' : ''}] Sua vaga está garantida no Projeto 45 Graus!`,
+                to: customerEmail,
+                subject: '✅ Sua vaga está garantida no Projeto 45 Graus!',
                 react: ConfirmacaoCompra({
                   nome: firstName,
                   preco: formatPrice(amountTotal),
@@ -153,7 +146,7 @@ export async function POST(req: NextRequest) {
                 }),
               });
 
-              console.log('[Stripe Webhook] ✅ Email de confirmação enviado para:', emailTo, isDevelopment ? '(modo teste)' : '');
+              console.log('[Stripe Webhook] ✅ Email de confirmação enviado para:', customerEmail);
             } catch (emailError) {
               console.error('[Stripe Webhook] ⚠️ Erro ao enviar email (mas pagamento foi salvo):', emailError);
               // Não fazer throw - pagamento já foi salvo no Sheets

@@ -148,9 +148,10 @@ export const OfertaSection: React.FC = () => {
                   'Consulta individual de 30min com Amauri (Personal Trainer)',
                   'Plano alimentar 100% personalizado',
                   'Planilha de treino individualizada para 45 dias',
-                  'Acesso ao grupo VIP no WhatsApp',
-                  'Suporte durante todo o programa',
-                  'Garantia de 7 dias (satisfação ou devolução)',
+                  'Acesso aos apps WebDiet e MFit Personal (45 dias)',
+                  'Acesso ao grupo VIP no WhatsApp (45 dias)',
+                  '5 guias exclusivos (seus para sempre)',
+                  'Suporte profissional durante os 45 dias',
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <Check className="w-6 h-6 text-[var(--gold-primary)] flex-shrink-0 mt-0.5" />
@@ -183,12 +184,6 @@ export const OfertaSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Garantia */}
-        <div className="text-center mt-8">
-          <p className="text-[var(--text-muted)] text-sm">
-            🛡️ <span className="text-[var(--gold-primary)] font-semibold">Garantia de 7 dias</span> - Se não gostar, devolvemos seu dinheiro
-          </p>
-        </div>
       </div>
     </section>
   );

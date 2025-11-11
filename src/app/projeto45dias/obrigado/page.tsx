@@ -732,7 +732,7 @@ function ThankYouContent() {
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-zinc-50">Entre no grupo VIP do WhatsApp</h3>
                   <p className="text-zinc-400 mb-4">
-                    Acesso exclusivo com suporte direto da Seyune e do Amauri durante todo o programa.
+                    Acesso exclusivo com suporte direto da Seyune e do Amauri durante os 45 dias do programa. É aqui que você receberá as credenciais de acesso aos apps WebDiet e MFit Personal.
                   </p>
                   <a
                     href={whatsappLink}
@@ -753,11 +753,12 @@ function ThankYouContent() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold mb-2 text-zinc-50">
-                    Aguarde instruções para agendar consultas
+                    Receba seus materiais e credenciais
                   </h3>
                   <p className="text-zinc-400">
-                    Em breve você receberá as orientações para agendar suas consultas individuais de 30 minutos
-                    com a Seyune (nutricionista) e com o Amauri (personal trainer).
+                    Através do grupo WhatsApp, você receberá os 5 guias exclusivos em PDF, as credenciais dos apps
+                    WebDiet e MFit Personal, e as orientações para agendar suas consultas individuais de 30 minutos
+                    com a Seyune (nutricionista) e o Amauri (personal trainer).
                   </p>
                 </div>
               </div>
@@ -799,23 +800,30 @@ function ThankYouContent() {
 
               <div className="flex gap-3">
                 <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
-                <span className="text-zinc-50">Grupo VIP WhatsApp com suporte direto</span>
+                <div>
+                  <span className="text-zinc-50 font-semibold">Acesso aos apps WebDiet e MFit Personal (45 dias)</span>
+                  <p className="text-zinc-400 text-sm mt-1">Credenciais enviadas via grupo WhatsApp</p>
+                </div>
               </div>
 
               <div className="flex gap-3">
                 <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
-                <span className="text-zinc-50">Acompanhamento durante todo o programa</span>
+                <div>
+                  <span className="text-zinc-50 font-semibold">5 guias exclusivos (seus para sempre)</span>
+                  <p className="text-zinc-400 text-sm mt-1">Emagrecimento, não sabotar, ganho de massa, festas e receitas</p>
+                </div>
               </div>
 
               <div className="flex gap-3">
                 <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
-                <span className="text-zinc-50">Garantia de 7 dias (satisfação ou devolução)</span>
+                <span className="text-zinc-50">Grupo VIP WhatsApp com suporte direto (45 dias)</span>
               </div>
 
               <div className="flex gap-3">
                 <CheckCircle className="w-6 h-6 text-amber-500 flex-shrink-0 mt-1" />
-                <span className="text-zinc-50">Suporte durante todo o programa</span>
+                <span className="text-zinc-50">Acompanhamento profissional durante os 45 dias</span>
               </div>
+
             </div>
           </motion.div>
 

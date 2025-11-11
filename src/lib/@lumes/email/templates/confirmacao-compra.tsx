@@ -54,21 +54,23 @@ export default function ConfirmacaoCompra({
               <span style={stepNumber}>1.</span> Entre no grupo VIP do WhatsApp
             </Text>
             <Text style={stepText}>
-              Acesso exclusivo com suporte direto da Seyune e do Amauri durante todo o programa.
+              Acesso exclusivo com suporte direto da Seyune e do Amauri durante os 45 dias do programa.
+              É aqui que você receberá as credenciais de acesso aos apps WebDiet e MFit Personal.
             </Text>
             <Button style={buttonSecondary} href={linkWhatsApp}>
               🚀 Entrar no Grupo VIP
             </Button>
           </Section>
 
-          {/* Passo 2 - Aguardar Instruções */}
+          {/* Passo 2 - Receber Materiais */}
           <Section style={stepBox}>
             <Text style={stepTitle}>
-              <span style={stepNumber}>2.</span> Aguarde instruções para agendar suas consultas
+              <span style={stepNumber}>2.</span> Receba seus materiais e credenciais
             </Text>
             <Text style={stepText}>
-              Em breve você receberá as orientações para agendar suas consultas
-              individuais de 30 minutos com a Seyune (nutricionista) e o Amauri (personal trainer).
+              Através do grupo WhatsApp, você receberá os 5 guias exclusivos em PDF,
+              as credenciais dos apps WebDiet e MFit Personal, e as orientações para agendar
+              suas consultas individuais de 30 minutos com a Seyune (nutricionista) e o Amauri (personal trainer).
             </Text>
           </Section>
 
@@ -87,16 +89,26 @@ export default function ConfirmacaoCompra({
           <Section style={bonusBox}>
             <Heading style={h3}>🎁 O que você recebe:</Heading>
             <Text style={text}>
-              • Consulta individual 30min com Seyune
+              • Consulta individual 30min com Seyune (Nutricionista)
               <br />
-              • Consulta individual 30min com Amauri
+              • Consulta individual 30min com Amauri (Personal Trainer)
               <br />
-              • Acesso aos apps WebDiet e MFit Personal
+              • Plano alimentar 100% personalizado
               <br />
-              • Grupo VIP WhatsApp com suporte direto
+              • Planilha de treino individualizada para 45 dias
               <br />
-              • Materiais exclusivos de nutrição e treino
-              <br />• Acompanhamento durante todo o desafio
+              • <strong>Acesso aos apps WebDiet e MFit Personal (45 dias)</strong>
+              <br />
+              • <strong>Grupo VIP WhatsApp com suporte direto (45 dias)</strong>
+              <br />
+              • <strong>5 guias exclusivos (seus para sempre)</strong>
+              <br />
+              • Acompanhamento profissional durante os 45 dias
+            </Text>
+
+            <Text style={{...text, marginTop: '20px', fontSize: '14px', color: '#d4af37'}}>
+              📩 <strong>Importante:</strong> Os 5 guias exclusivos em PDF e as credenciais dos apps
+              WebDiet e MFit Personal serão enviados através do grupo VIP do WhatsApp após a confirmação do pagamento.
             </Text>
           </Section>
 
