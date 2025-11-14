@@ -1,0 +1,323 @@
+/**
+ * Analytics Dashboard - Main Page
+ */
+
+'use client';
+
+import { useState, useMemo } from 'react';
+import { AnalyticsClient, InsightsEngine } from '@/lib/@lumes/analytics';
+import type { Campaign, CampaignMetrics, Insight } from '@/lib/@lumes/analytics';
+
+// Components (criar depois)
+import { UploadZone } from './components/UploadZone';
+import { MetricsCards } from './components/MetricsCards';
+import { PerformanceChart } from './components/PerformanceChart';
+import { CPLChart } from './components/CPLChart';
+import { CampaignsTable } from './components/CampaignsTable';
+import { ConversionFunnel } from './components/ConversionFunnel';
+import { InsightsPanel } from './components/InsightsPanel';
+import { FiltersPanel, type FilterState, type PerformanceFilter } from './components/FiltersPanel';
+
+export default function AnalyticsPage() {
+  const [csvData, setCsvData] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Dados processados (originais, sem filtro)
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [originalMetrics, setOriginalMetrics] = useState<CampaignMetrics | null>(null);
+
+  // Estado de filtros
+  const [filters, setFilters] = useState<FilterState>({
+    performance: 'all',
+    selectedCampaigns: [],
+    minConversions: 0,
+    sortBy: 'cpl-asc',
+  });
+
+  const handleFileUpload = async (file: File) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Ler arquivo
+      const text = await file.text();
+      setCsvData(text);
+
+      // Processar com AnalyticsClient
+      const analytics = AnalyticsClient.create({
+        adapter: 'csv',
+        csvData: text,
+      });
+
+      const [campaignsData, metricsData] = await Promise.all([
+        analytics.getCampaigns(),
+        analytics.getMetrics(),
+      ]);
+
+      setCampaigns(campaignsData);
+      setOriginalMetrics(metricsData);
+
+      // Inicializar filtros com todas campanhas selecionadas
+      setFilters({
+        performance: 'all',
+        selectedCampaigns: campaignsData.map((c) => c.id),
+        minConversions: 0,
+        sortBy: 'cpl-asc',
+      });
+    } catch (err) {
+      console.error('[Analytics] Erro ao processar CSV:', err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Erro ao processar arquivo. Verifique o formato.'
+      );
+      setCsvData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    setCsvData(null);
+    setCampaigns([]);
+    setOriginalMetrics(null);
+    setError(null);
+    setFilters({
+      performance: 'all',
+      selectedCampaigns: [],
+      minConversions: 0,
+      sortBy: 'cpl-asc',
+    });
+  };
+
+  // Determinar performance de uma campanha
+  const getCampaignPerformance = (campaign: Campaign): PerformanceFilter => {
+    if (campaign.conversions === 0) return 'critical';
+    const targetCPL = 70;
+    if (campaign.cpl < targetCPL * 0.7) return 'excellent'; // < R$49
+    if (campaign.cpl <= targetCPL) return 'good'; // R$49-70
+    if (campaign.cpl <= targetCPL * 1.4) return 'warning'; // R$70-98
+    return 'critical'; // > R$98
+  };
+
+  // Aplicar filtros e ordenação (memoizado)
+  const filteredCampaigns = useMemo(() => {
+    let result = [...campaigns];
+
+    // Filtro por performance
+    if (filters.performance !== 'all') {
+      result = result.filter((c) => getCampaignPerformance(c) === filters.performance);
+    }
+
+    // Filtro por campanhas selecionadas
+    if (filters.selectedCampaigns.length > 0) {
+      result = result.filter((c) => filters.selectedCampaigns.includes(c.id));
+    }
+
+    // Filtro por mínimo de conversões
+    if (filters.minConversions > 0) {
+      result = result.filter((c) => c.conversions >= filters.minConversions);
+    }
+
+    // Ordenação
+    switch (filters.sortBy) {
+      case 'cpl-asc':
+        result.sort((a, b) => a.cpl - b.cpl);
+        break;
+      case 'cpl-desc':
+        result.sort((a, b) => b.cpl - a.cpl);
+        break;
+      case 'conversions-desc':
+        result.sort((a, b) => b.conversions - a.conversions);
+        break;
+      case 'spent-desc':
+        result.sort((a, b) => b.amountSpent - a.amountSpent);
+        break;
+      case 'name-asc':
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+    }
+
+    return result;
+  }, [campaigns, filters]);
+
+  // Recalcular métricas baseadas em campanhas filtradas (memoizado)
+  const filteredMetrics = useMemo((): CampaignMetrics | null => {
+    if (filteredCampaigns.length === 0 || !originalMetrics) {
+      return originalMetrics;
+    }
+
+    const totals = filteredCampaigns.reduce(
+      (acc, campaign) => ({
+        spent: acc.spent + campaign.amountSpent,
+        impressions: acc.impressions + campaign.impressions,
+        clicks: acc.clicks + campaign.clicks,
+        conversions: acc.conversions + campaign.conversions,
+        ctr: acc.ctr + campaign.ctr,
+        cpc: acc.cpc + campaign.cpc,
+        cpl: acc.cpl + campaign.cpl,
+        conversionRate: acc.conversionRate + campaign.conversionRate,
+      }),
+      {
+        spent: 0,
+        impressions: 0,
+        clicks: 0,
+        conversions: 0,
+        ctr: 0,
+        cpc: 0,
+        cpl: 0,
+        conversionRate: 0,
+      }
+    );
+
+    const count = filteredCampaigns.length;
+
+    return {
+      totalSpent: Math.round(totals.spent * 100) / 100,
+      totalImpressions: totals.impressions,
+      totalClicks: totals.clicks,
+      totalConversions: totals.conversions,
+      avgCTR: Math.round((totals.ctr / count) * 100) / 100,
+      avgCPC: Math.round((totals.cpc / count) * 100) / 100,
+      avgCPL: Math.round((totals.cpl / count) * 100) / 100,
+      avgConversionRate: Math.round((totals.conversionRate / count) * 100) / 100,
+    };
+  }, [filteredCampaigns, originalMetrics]);
+
+  // Recalcular insights baseados em campanhas filtradas (memoizado)
+  const filteredInsights = useMemo((): Insight[] => {
+    if (filteredCampaigns.length === 0) {
+      return [];
+    }
+
+    const insightsEngine = new InsightsEngine({
+      cpl: 70,
+      ctr: 1,
+      cpc: 5,
+    });
+
+    return insightsEngine.analyze(filteredCampaigns);
+  }, [filteredCampaigns]);
+
+  // Empty state
+  if (!csvData || !originalMetrics) {
+    return (
+      <div className="max-w-3xl mx-auto">
+        <UploadZone
+          onUpload={handleFileUpload}
+          loading={loading}
+          error={error}
+        />
+
+        {/* Instruções */}
+        <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Como usar
+          </h2>
+          <ol className="space-y-3 text-sm text-gray-600">
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#874329] text-white text-xs font-bold">
+                1
+              </span>
+              <span>
+                <strong className="text-gray-900">Exporte CSV do Meta Ads Manager:</strong><br />
+                Ads Manager → Campanhas → Exportar → CSV
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#874329] text-white text-xs font-bold">
+                2
+              </span>
+              <span>
+                <strong className="text-gray-900">Faça upload do arquivo</strong><br />
+                Arraste e solte ou clique para selecionar
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#874329] text-white text-xs font-bold">
+                3
+              </span>
+              <span>
+                <strong className="text-gray-900">Analise os resultados</strong><br />
+                Veja métricas, gráficos e insights automáticos
+              </span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    );
+  }
+
+  // Dashboard com dados
+  return (
+    <div className="space-y-6">
+      {/* Header com reset */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-gray-900">
+            Análise de {campaigns.length} campanha{campaigns.length !== 1 ? 's' : ''}
+          </h2>
+          <p className="text-sm text-gray-500 mt-1">
+            {filteredCampaigns.length === campaigns.length ? (
+              'Todas as campanhas'
+            ) : (
+              <>
+                Mostrando {filteredCampaigns.length} de {campaigns.length} campanhas
+              </>
+            )}
+          </p>
+        </div>
+        <button
+          onClick={handleReset}
+          className="text-sm text-gray-600 hover:text-gray-900 underline"
+        >
+          Carregar novo CSV
+        </button>
+      </div>
+
+      {/* Filtros */}
+      <FiltersPanel
+        campaigns={campaigns}
+        filters={filters}
+        onFiltersChange={setFilters}
+      />
+
+      {/* Verificar se há campanhas após filtros */}
+      {filteredCampaigns.length === 0 ? (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
+          <p className="text-amber-800 font-medium">
+            Nenhuma campanha corresponde aos filtros selecionados
+          </p>
+          <p className="text-sm text-amber-600 mt-2">
+            Ajuste os filtros ou clique em &quot;Limpar filtros&quot; para ver todas as campanhas
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Métricas Overview */}
+          <MetricsCards metrics={filteredMetrics!} />
+
+          {/* Gráficos */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <PerformanceChart campaigns={filteredCampaigns} />
+            <CPLChart campaigns={filteredCampaigns} />
+          </div>
+
+          {/* Tabela Detalhada */}
+          <CampaignsTable campaigns={filteredCampaigns} />
+
+          {/* Funil de Conversão */}
+          <ConversionFunnel metrics={filteredMetrics!} />
+
+          {/* Insights */}
+          <InsightsPanel
+            insights={filteredInsights}
+            campaigns={filteredCampaigns}
+            metrics={filteredMetrics!}
+          />
+        </>
+      )}
+    </div>
+  );
+}
