@@ -8,13 +8,12 @@
  */
 
 import type {
-  MetaConversionsConfig,
   ServerEvent,
   SendEventResult,
   UserData,
   CustomData,
 } from './types';
-import { validateConfig } from './config';
+import { validateConfig, type MetaConversionsConfig } from './config';
 import {
   MetaConversionsAPIError,
   MetaConversionsConfigError,
