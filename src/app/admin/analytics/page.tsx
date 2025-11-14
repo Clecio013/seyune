@@ -220,10 +220,26 @@ export default function AnalyticsPage() {
               <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#874329] text-white text-xs font-bold">
                 1
               </span>
-              <span>
-                <strong className="text-gray-900">Exporte CSV do Meta Ads Manager:</strong><br />
-                Ads Manager → Campanhas → Exportar → CSV
-              </span>
+              <div className="flex-1">
+                <strong className="text-gray-900">Exporte CSV do Meta Ads Manager:</strong>
+                <p className="mt-1">Ads Manager → Campanhas → Exportar → CSV</p>
+
+                <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-md">
+                  <p className="text-xs font-semibold text-amber-900 mb-2">
+                    📊 Colunas necessárias no relatório:
+                  </p>
+                  <ul className="text-xs text-amber-800 space-y-1 ml-4 list-disc">
+                    <li><strong>Nome da campanha</strong> (obrigatório)</li>
+                    <li><strong>Impressões</strong> ou Alcance</li>
+                    <li><strong>Cliques no link</strong> ou Cliques (todos)</li>
+                    <li><strong>Conversões</strong> (Leads, Compras ou Resultados)</li>
+                    <li><strong>Valor gasto</strong> (em BRL)</li>
+                  </ul>
+                  <p className="text-xs text-amber-700 mt-2 italic">
+                    💡 Dica: Use &quot;Colunas: Performance&quot; ou personalize as colunas no Meta Ads Manager
+                  </p>
+                </div>
+              </div>
             </li>
             <li className="flex gap-3">
               <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-[#874329] text-white text-xs font-bold">
