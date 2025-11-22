@@ -109,14 +109,20 @@ function findColumn(headers: string[], possibleNames: string[]): string | null {
 
 /**
  * Parse número do CSV (remove símbolos de moeda, vírgulas, etc)
+ * Formato brasileiro: R$ 1.234,56 (ponto = milhar, vírgula = decimal)
  */
 function parseNumber(value: string): number {
   if (!value) return 0;
 
-  // Remove símbolos de moeda, espaços, vírgulas
+  // Formato brasileiro: R$ 1.234,56
+  // 1. Remove R$ e espaços
+  // 2. Remove pontos (separador de milhar)
+  // 3. Converte vírgula (decimal) para ponto
   const cleaned = value
-    .replace(/[R$\s,]/g, '')
-    .replace(',', '.') // Vírgula decimal → ponto
+    .replace(/R\$/g, '')     // Remove R$
+    .replace(/\s/g, '')      // Remove espaços
+    .replace(/\./g, '')      // Remove ponto (separador de milhar)
+    .replace(',', '.')       // Converte vírgula decimal → ponto
     .trim();
 
   const num = parseFloat(cleaned);
